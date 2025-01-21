@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Signup</title>
+
+	<link rel="stylesheet" href="/header.css">
+	<link rel="stylesheet" href="/error.css">
+
+	<script src="script.js" defer></script>
+</head>
+
+<body>
+	<header>
+		<nav>
+			<a href="/">Home</a>
+			<a href="/login">Login</a>
+		</nav>
+	</header>
+	<hr>
+	<main>
+		<form action="/auth/signup" method="post">
+			<label for="username">Username</label><br>
+			<input type="text" name="username" id="username" maxlength="20" required><br>
+			<label for="password">Password</label><br>
+			<input type="password" name="password" id="password" maxlength="64" required><br>
+			<label for="confirm_password">Confirm Password</label><br>
+			<input type="password" name="confirm_password" id="confirm_password" maxlength="64" required><br>
+			<input type="submit" value="Signup">
+		</form>
+		{{#if error}}
+		<h4 class="error">{{error}}</h4>
+		{{/if}}
+	</main>
+</body>
+
+</html>

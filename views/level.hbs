@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{level.name}}</title>
+
+	<link rel="stylesheet" href="/header.css">
+	<link rel="stylesheet" href="style.css">
+
+	<script src="delete.js" defer></script>
+	<script src="ratings.js" defer></script>
+	<script src="comments.js" defer></script>
+	<script src="highscores.js" defer></script>
+</head>
+
+<body>
+	<header>
+		<span class="user">
+			{{#if user}}
+			<a href="/user?id={{user.id}}" class="username">{{user.username}}</a>
+			{{else}}
+			<a href="/login">Login</a>
+			<a href="/signup">Signup</a>
+			{{/if}}
+		</span>
+		<nav>
+			<a href="/">Home</a>
+		</nav>
+	</header>
+	<hr>
+	<main>
+		<section class="level">
+			<h1 class="name">{{level.name}}</h1>
+			<p class="description">{{level.description}}</p>
+			<a href="/level/play?id={{level.id}}" class="play"><button>Play</button></a><br>
+			<span class="uploaded">
+				Uploaded: <span class="date">{{level.uploadDate}}</span>
+			</span><br>
+			<span class="rating" {{#if user}} data-user-score="{{level.userScore}}" {{/if}}>
+				Rating: <span class="score">{{rating}}</span>
+				{{#if user}}
+				<button class="like" onclick="like()">Like</button>
+				<button class="dislike" onclick="dislike()">Dislike</button>
+				{{/if}}
+			</span><br>
+			{{#if relation.deletable}}
+			<button class="delete" onclick="remove()">Delete level</button>
+			{{/if}}
+
+			<h3 class="creator-name">Creator: <a href="/user?id={{level.creatorId}}">{{level.creator}}</a></h3>
+			<span class="followers">Followers: <span class="follower-amount">{{followers}}</span></span>
+		</section>
+
+		<section class="highscores">
+			<h3>Highscores</h3>
+			<button class="best-time" onclick="update_scores('bestTime')">Best Time</button>
+			<button class="best-deaths" onclick="update_scores('bestDeaths')">Best Deaths</button>
+			<table class="highscore-container"></table>
+		</section>
+
+		<section class="comments">
+			<h2>Comments</h2>
+			{{#if user}}
+			<form action="/upload/comment?id={{level.id}}" method="post">
+				<label for="content">Comment as {{user.username}}</label><br>
+				<textarea name="content" id="content" cols="30" rows="4" maxlength="8000" required></textarea><br>
+				<input type="submit" value="Post">
+			</form>
+			{{/if}}
+			<div class="comment-container"></div>
+		</section>
+	</main>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+textarea {
+	resize: none;
+}
+
+.description {
+	max-width: 200px;
+}
+
+main {
+	display: grid;
+	justify-items: left;
+
+}
+
+.comment {
+	width: fit-content;
+	border: 1px solid black;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+.comment * {
+	margin: 10px 20px;
+	max-width: 200px;
+	word-wrap: break-word;
+}
+
+.level {
+	grid-column: 1;
+	grid-row: 1;
+}
+
+.comments {
+	grid-column: 1;
+	grid-row: 2;
+}
+
+.highscores {
+	grid-column: 2;
+	grid-row: 1;
+}
+
+.highscore td:not(:last-child) {
+	padding-right: 30px;
+}
+
+.highscore td:last-child {
+	width: 100px;
+}
+
+.highscore.user-rank td {
+	padding-top: 40px;
+}
+
+.rating[data-user-score="1"] .like {
+	background-color: forestgreen;
+}
+
+.rating[data-user-score="-1"] .dislike {
+	background-color: crimson;
+}
+
+.highscores[data-field="bestTime"] .best-time {
+	background-color: cornflowerblue;
+}
+
+.highscores[data-field="bestDeaths"] .best-deaths {
+	background-color: cornflowerblue;
+}
+
+.delete {
+	color: crimson;
+}

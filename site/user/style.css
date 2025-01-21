@@ -1,0 +1,17 @@
+.followers[data-is-following="1"] .follow,
+.followers[data-is-following="0"] .unfollow {
+	visibility: hidden;
+	display: inline-block;
+	width: 0;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+.delete {
+	color: crimson;
+}
+
+.admin {
+	color: darkgreen;
+}

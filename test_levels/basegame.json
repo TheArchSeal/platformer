@@ -1,0 +1,200 @@
+{
+	"data": [
+		{
+			"brick": ["assets/dungeon tile set.png", 16, 1, 1, true, true],
+			"slate": ["assets/dungeon tile set.png", 16, 1, 5, true, true],
+
+			"platform": ["assets/dungeon tile set.png", 16, 1, 10, true, false],
+
+			"spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false],
+			"left spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 1],
+			"right spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 3],
+			"top spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 2]
+		},
+		{
+			"player idle": ["assets/player idle 48x48.png", 14, 11, 17, 29, 48, 10, 0, 0.1, 0],
+			"player run": ["assets/run cycle 48x48.png", 14, 11, 17, 29, 48, 8, 0, 0.1, 0],
+			"player jump": ["assets/player jump 48x48.png", 14, 11, 17, 29, 48, 1, 0, -1, -1],
+			"player airborne": ["assets/player jump 48x48.png", 14, 11, 17, 29, 48, 1, 0, -1, -1],
+			"player fall": ["assets/player jump 48x48.png", 14, 11, 17, 29, 48, 1, 2, -1, -1],
+			"player land": ["assets/player land 48x48.png", 14, 11, 17, 29, 48, 9, 0, 0.1, -1],
+			"player wall cling": ["assets/wall slide 48x48.png", 18, 8, 17, 29, 48, 3, 0, 0.1, -1],
+			"player wall land": ["assets/wall land 48x48.png", 18, 8, 17, 29, 48, 2, 0, 0.1, -1],
+
+			"crystal item": ["assets/pixel purple gem.png", 0, 0, 32, 32, 32, 7, 0, 0.1, 3],
+			"goal": ["assets/flag animation.png", 0, 0, 45, 60, 60, 5, 0, 0.15, 0]
+		},
+		{
+			"1": [
+				30, 20, [3, 11, 1],
+				[
+					["brick", 0, -1, 30, 2],
+					["brick", -1, 1, 2, 19],
+					["brick", 29, 1, 2, 3],
+
+					["slate", 23, 8, 100, 100],
+					["slate", 16, -1, 3, 10],
+					["slate", -1, 14, 10, 100],
+					["slate", 14, 14, 100, 100]
+				],
+				[],
+				[],
+				["assets/tutorial tile set.png", 32, "#181425", [
+					[1, 1, 2, 9],
+					[2, 1, 3, 9],
+					[3, 1, 4, 9],
+					[4, 1, 5, 9],
+					[5, 1, 6, 9],
+					[1, 2, 2, 10],
+					[2, 2, 3, 10],
+					[3, 2, 4, 10],
+					[4, 2, 5, 10],
+					[5, 2, 6, 10],
+
+					[1, 4, 9, 10],
+					[2, 4, 10, 10],
+					[3, 4, 11, 10],
+					[4, 4, 12, 10],
+					[5, 4, 13, 10]
+				]],
+				null, null, null, 2
+			],
+
+			"2": [
+				30, 20, [3, 11, 1],
+				[
+					["brick", 0, -1, 30, 2],
+					["brick", -1, 1, 2, 19],
+					["brick", 29, 1, 2, 3],
+					["brick", 29, 11, 2, 3],
+
+					["slate", 16, -1, 4, 12],
+					["slate", -1, 14, 17, 100],
+					["slate", 20, 14, 100, 100],
+					["slate", 16, 16, 4, 100],
+
+					["platform", 20, 11, 9, 1, true, false, false, false],
+
+					["spike", 8, 13, 2, 1, true, true, true, true, true, 0.5],
+					["spike", 16, 15, 4, 1, true, true, true, true, true, 0.5]
+				],
+				[],
+				[],
+				["assets/tutorial tile set.png", 32, "#181425", [
+					[1, 6, 16, 12],
+					[2, 6, 17, 12],
+					[3, 6, 18, 12],
+					[4, 6, 19, 12]
+				]],
+				null, null, null, 3
+			],
+
+			"3": [
+				30, 20, [3, 11, 1],
+				[
+					["brick", 0, -1, 30, 2],
+					["brick", -1, 1, 2, 19],
+					["brick", 29, 1, 2, 3],
+					["brick", 25, 11, 100, 100],
+
+					["slate", -1, 14, 100, 100],
+					["slate", 7, 7, 2, 100],
+					["platform", 1, 7, 6, 1, true, false, false, false],
+
+					["left spike", 1, 7, 1, 7, true, true, true, true, true, 0.5],
+					["right spike", 6, 7, 1, 7, true, true, true, true, true, 0.5],
+					["spike", 9, 13, 16, 1, true, true, true, true, true, 0.5]
+				],
+				[
+					["crystal item", 16, 5, 1]
+				],
+				[],
+				["assets/tutorial tile set.png", 32, "#181425", [
+					[1, 1, 2, 2],
+					[2, 1, 3, 2],
+					[3, 1, 4, 2],
+					[4, 1, 5, 2],
+					[5, 1, 6, 2],
+					[1, 2, 2, 3],
+					[2, 2, 3, 3],
+					[3, 2, 4, 3],
+					[4, 2, 5, 3],
+					[5, 2, 6, 3],
+
+					[1, 8, 4, 4],
+
+					[1, 6, 2, 5],
+					[2, 6, 3, 5],
+					[3, 6, 4, 5],
+					[4, 6, 5, 5],
+
+					[1, 6, 14, 7],
+					[2, 6, 15, 7],
+					[3, 6, 16, 7],
+					[4, 6, 17, 7],
+
+					[3, 8, 18, 7],
+					[4, 8, 19, 7]
+				]],
+				null, null, null, 4
+			],
+
+			"4": [
+				60, 40, [3, 20, 1],
+				[
+					["brick", -1, 23, 17, 2],
+					["brick", 35, 19, 11, 6],
+					["slate", 15, 16, 21, 10],
+
+					["brick", -1, 10, 7, 6],
+
+					["slate", 23, 5, 6, 3],
+					["platform", 15, 6, 8, 1, true, false, false, false],
+
+					["brick", 35, 1, 2, 11],
+
+					["brick", 35, -1, 25, 2],
+					["brick", 59, 1, 2, 100],
+					["slate", 45, 9, 8, 17],
+					["brick", 45, 8, 11, 2],
+
+					["slate", 45, 30, 100, 100],
+					["slate", -1, 33, 17, 100],
+
+					["spike", 8, 22, 7, 1, true, true, true, true, true, 0.5],
+					["spike", 15, 5, 8, 1, true, true, true, true, true, 0.5],
+					["right spike", 25, 8, 1, 8, true, true, true, true, true, 0.5],
+					["left spike", 26, 8, 1, 8, true, true, true, true, true, 0.5],
+					["spike", 36, 18, 9, 1, true, true, true, true, true, 0.5],
+					["right spike", 44, 8, 1, 11, true, true, true, true, true, 0.5],
+					["top spike", 35, 12, 5, 1, true, true, true, true, 0.5],
+					["spike", 37, 11, 3, 1, true, true, true, true, 0.5],
+
+					["right spike", 55, 14, 1, 4, true, true, true, true, true, 0.5],
+					["left spike", 56, 14, 1, 4, true, true, true, true, true, 0.5],
+					["spike", 56, 17, 3, 1, true, true, true, true, true, 0.5],
+					["right spike", 55, 22, 1, 4, true, true, true, true, true, 0.5],
+					["left spike", 56, 22, 1, 4, true, true, true, true, true, 0.5],
+					["spike", 53, 25, 3, 1, true, true, true, true, true, 0.5],
+					["spike", 53, 29, 6, 1, true, true, true, true, true, 0.5]
+				],
+				[
+					["crystal item", 14, 1, 1],
+					["crystal item", 41, 13, 1],
+					["crystal item", 38, 9, 1],
+
+					["crystal item", 35, 29, 1],
+					["crystal item", 30, 29, 1],
+					["crystal item", 25, 29, 1],
+					["crystal item", 20, 29, 1]
+				],
+				[
+					["goal", 2, 29]
+				],
+				["assets/tutorial tile set.png", 32, "#181425", []],
+				null, null, null, null
+			]
+		},
+		"1"
+	]
+}

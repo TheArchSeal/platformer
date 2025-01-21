@@ -1,0 +1,15 @@
+{
+	"data": [
+		{
+			"brick": ["assets/dungeon tile set.png", 16, 1, 1, true, true],
+			"slate": ["assets/dungeon tile set.png", 16, 1, 5, true, true],
+
+			"platform": ["assets/dungeon tile set.png", 16, 1, 10, true, false],
+
+			"spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false],
+			"left spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 1],
+			"right spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 3],
+			"top spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 2]
+		}
+	]
+}

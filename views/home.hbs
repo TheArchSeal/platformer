@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home</title>
+
+	<link rel="stylesheet" href="/header.css">
+	<link rel="stylesheet" href="style.css">
+
+	<script src="script.js" defer></script>
+</head>
+
+<body>
+	<header>
+		<span class="user">
+			{{#if user}}
+			<a href="/user?id={{user.id}}" class="username">{{user.username}}</a>
+			{{else}}
+			<a href="/login">Login</a>
+			<a href="/signup">Signup</a>
+			{{/if}}
+		</span>
+		{{#if user}}
+		<nav><a href="/upload">Upload</a></nav>
+		{{/if}}
+		<div class="search-area">
+			<form class="search-form" action="#" method="get">
+				<table class="search-table">
+					<tr>
+						<td><label for="name">Name</label></td>
+						<td><input type="search" name="name" id="name" placeholder="name" {{#if search.name}}
+								value="{{search.name}}" {{/if}}></td>
+						<td><input type="number" name="levelId" id="levelId" placeholder="id" {{#if search.levelId}}
+								value="{{search.levelId}}" {{/if}}></td>
+					</tr>
+					<tr>
+						<td><label for="creator">Creator</label></td>
+						<td><input type="search" name="creator" id="creator" placeholder="creator" {{#if
+								search.creator}} value="{{search.creator}}" {{/if}}></td>
+						<td><input type="number" name="creatorId" id="creatorId" placeholder="id" {{#if
+								search.creatorId}} value="{{search.creatorId}}" {{/if}}></td>
+					</tr>
+					<tr>
+						<td><label for="sort">Sort by</label></td>
+						<td>
+							{{#select search.sort}}
+							<select name="sort" id="sort">
+								<option value="default">relevance</option>
+								<option value="name">alphabetical</option>
+								<option value="score">rating</option>
+								<option value="uploadDate">upload date</option>
+							</select>
+							{{/select}}
+						</td>
+						<td>
+							{{#select search.order}}
+							<select name="order" id="order">
+								<option value="desc">Descending</option>
+								<option value="asc">Ascending</option>
+							</select>
+							{{/select}}
+						</td>
+					</tr>
+					<tr>
+						<td><input type="submit" value="Search"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</header>
+	<hr>
+	<main>
+		<table class="level-container"></table>
+
+		{{#if follows}}
+		<aside class="following">
+			<h3>Following</h3>
+			{{#each follows}}
+			<h4 class="follow"><a href="/user?id={{creatorId}}">{{username}}</a></h4>
+			{{/each}}
+		</aside>
+		{{/if}}
+	</main>
+</body>
+
+</html>

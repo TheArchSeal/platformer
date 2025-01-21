@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{level.name}}</title>
+	<link rel="stylesheet" href="style.css">
+
+	<script defer>
+		const template = (
+			{{{ data }}}
+		).data;
+	</script>
+
+	<script src="template.js" defer></script>
+	<script src="hitbox.js" defer></script>
+	<script src="highscore.js" defer></script>
+
+	<script src="tile.js" defer></script>
+	<script src="sprite.js" defer></script>
+	<script src="background.js" defer></script>
+
+	<script src="object.js" defer></script>
+	<script src="item.js" defer></script>
+	<script src="goal.js" defer></script>
+	<script src="player.js" defer></script>
+
+	<script src="level.js" defer></script>
+	<script src="game.js" defer></script>
+
+	<script src="parse.js" defer></script>
+	<script src="main.js" defer></script>
+</head>
+
+<body>
+	<canvas></canvas>
+
+	<div class="win-screen">
+		<div class="win-panel">
+			<h1 class="title">You Won!</h1>
+			<p class="current time">Time: <span></span></p>
+			<p class="current deaths">Deaths: <span></span></p>
+
+			<h2 class="best title"></h2>
+			<p class="best time">Time: <span></span></p>
+			<p class="best deaths">Deaths: <span></span></p>
+
+			<button type="button" class="reset button" onclick="game.start()">Restart</button>
+			<button type="button" class="back button" onclick="location.href='/level?id={{level.id}}'">Back</button>
+		</div>
+	</div>
+</body>
+
+</html>

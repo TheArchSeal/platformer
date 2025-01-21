@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{target.name}}</title>
+
+	<link rel="stylesheet" href="/header.css">
+	<link rel="stylesheet" href="style.css">
+
+	<script src="script.js" defer></script>
+</head>
+
+<body>
+	<header>
+		<span class="user">
+			{{#if user}}
+			<a href="/user?id={{user.id}}" class="username">{{user.username}}</a>
+			{{else}}
+			<a href="/login">Login</a>
+			<a href="/signup">Signup</a>
+			{{/if}}
+		</span>
+		<nav>
+			<a href="/">Home</a>
+		</nav>
+	</header>
+	<hr>
+	<main>
+		<h1 class="name">{{target.username}}</h1>
+		{{#if target.admin}}<h3 class="admin">Admin</h3>{{/if}}
+		<a href="/?creatorId={{target.id}}&sort=uploadDate&order=desc"><button>View levels</button></a><br>
+		<span>Joined: <span class="date">{{target.signupDate}}</span></span><br>
+		<span class="followers" {{#if user}} data-is-following="{{target.isFollowing}}" {{/if}}>
+			Followers: <span class="follower-amount">{{followers}}</span>
+			{{#if relation.followable}}
+			<button class="follow" onclick="update_following(1)">Follow</button>
+			<button class="unfollow" onclick="update_following(0)">Unfollow</button>
+			{{/if}}
+		</span><br>
+		<span>Levels: <span class="date">{{target.levelAmount}}</span></span><br>
+		<span>Average rating: <span class="date">{{target.avgRating}}</span></span><br>
+		{{#if relation.self}}<button class="logout" onclick="logout()">Logout</button><br>{{/if}}
+		{{#if relation.admin}}{{#if target.admin}}
+		<button class="delete" onclick="update_admin(0)">Remove admin</button><br>
+		{{else}}
+		<button class="admin" onclick="update_admin(1)">Promote to admin</button><br>
+		{{/if}}{{/if}}
+		{{#if relation.deletable}}<button class="delete" onclick="remove()">Delete account</button>{{/if}}
+	</main>
+</body>
+
+</html>

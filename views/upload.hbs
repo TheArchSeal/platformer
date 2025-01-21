@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Upload</title>
+
+	<link rel="stylesheet" href="/header.css">
+	<link rel="stylesheet" href="/error.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<header>
+		<span class="user">
+			{{#if user}}
+			<a href="/user?id={{user.id}}" class="username">{{user.username}}</a>
+			{{else}}
+			<a href="/login">Login</a>
+			<a href="/signup">Signup</a>
+			{{/if}}
+		</span>
+		<nav>
+			<a href="/">Home</a>
+		</nav>
+	</header>
+	<hr>
+
+	<main>
+		<form action="/upload/level" method="post" enctype="multipart/form-data">
+			<label for="name">Name</label><br>
+			<input type="text" name="name" id="name" maxlength="20" required><br>
+			<label for="description">Description</label><br>
+			<textarea name="description" id="description" maxlength="8000" cols="30" rows="4"></textarea><br>
+			<label for="data">Level Data</label>
+			<input type="file" name="data" id="data" accept="application/JSON" required><br>
+			<input type="submit" value="Upload">
+		</form>
+
+		{{#if error}}
+		<h4 class="error">{{error}}</h4>
+		{{/if}}
+	</main>
+
+</body>
+
+</html>
