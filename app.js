@@ -2,15 +2,11 @@ const express = require("express");
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const mysql = require("mysql2");
-const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
-const http = require("http");
-const https = require("https");
 const hbs = require("hbs");
 
 // connect to database
-dotenv.config({ path: "./.env" });
 const db = mysql.createPool({
 	host: process.env.DATABASE_HOST,
 	user: process.env.DATABASE_USER,
@@ -38,19 +34,12 @@ const {
 hbs.registerHelper("select", (value, options) => options.fn(this).replace(new RegExp(`(value="${value}")`), "$1 selected"));
 
 // paths to files
-const site_path = __dirname + "/site/";
+const site_path = __dirname + "/public/";
 const upload_path = __dirname + "/uploads/";
 // 8-64 characters including uppercase, lowercase, number and special
 const password_check = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,64}$/;
 // stay logged in for 1 day
 const login_time = 24 * 60 * 60;
-
-// https options
-const host = "0.0.0.0";
-const options = {
-	key: fs.readFileSync(__dirname + '/cert/key.pem'),
-	cert: fs.readFileSync(__dirname + '/cert/cert.pem')
-};
 
 const app = express();
 app.set("view engine", "hbs");
@@ -497,13 +486,4 @@ app.post("/delete/comment", verify_login((req, res, user) => {
 }));
 
 // start server
-const server = https.createServer(options, app);
-server.listen(443, host);
-
-// http server
-const http_app = express();
-http_app.all("*", (req, res) => {
-	res.redirect(301, `https://${req.headers.host}${req.url}`);
-});
-const http_server = http.createServer(http_app);
-http_server.listen(80, host)
+app.listen();
