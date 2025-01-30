@@ -1,5 +1,11 @@
 body {
     display: flex;
+    justify-content: space-evenly;
+}
+
+img {
+    user-select: none;
+    pointer-events: none;
 }
 
 .tool {
@@ -26,20 +32,34 @@ body {
     width: 50px;
 }
 
-table {
+.level {
     width: 80%;
-    margin: 0 auto;
+}
+
+.level table {
+    width: 100%;
     height: fit-content;
+    table-layout: fixed;
     border-collapse: collapse;
     background-color: #181425;
 }
 
-table tr,
-table td {
+.level table tr,
+.level table td {
     padding: 0;
     border: 1px solid black;
 }
 
 .cell {
+    position: relative;
     aspect-ratio: 1 / 1;
+    user-select: none;
+}
+
+.cell div {
+    position: absolute;
+}
+
+.ghost {
+    opacity: 50%;
 }

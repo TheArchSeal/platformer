@@ -7,7 +7,7 @@
     <title>Edit</title>
     <link rel="stylesheet" href="style.css">
 
-    <script src="resize.js" defer></script>
+    <script src="level.js" defer></script>
     <script src="tool.js" defer></script>
     <script src="tile.js" defer></script>
     <script src="sprite.js" defer></script>
@@ -22,12 +22,15 @@
         <div class="sprites"></div>
     </div>
     <div class="options">
+        <h2>Options</h2>
         <label for="width">Width</label>
         <input type="number" name="width" id="width" min="1" value="10" onchange="resize()">
         <label for="height">Height</label>
         <input type="number" name="height" id="height" min="1" value="10" onchange="resize()">
     </div>
-    <table></table>
+    <div class="level">
+        <table></table>
+    </div>
 </body>
 
 </html>

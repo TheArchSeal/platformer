@@ -4,8 +4,8 @@ const tools = [
     new TileTool("platform", "assets/dungeon tile set.png", 240, 288, 16, 1, 10, true, false, true, false, false, false, false, 0),
     new TileTool("spike", "assets/dungeon tile set.png", 240, 288, 16, 1, 14, false, false, true, true, true, true, true, 0.5),
 
-    new SpriteTool("crystal item", "item", { restore_count: 1 }, "assets/pixel purple gem.png", 224, 32, 0, 0, 32, 32, 32, 7, 0, 0.1, 3),
-    new SpriteTool("goal", "goal", {}, "assets/flag animation.png", 300, 60, 0, 0, 45, 60, 60, 5, 0, 0.15, 0)
+    new SpriteTool("crystal item", "item", { restore_count: 1 }, "assets/pixel purple gem.png", 224, 32, 0, 0, 32, 32, 32, 7, 0, 0.1, 3, 2, 2),
+    new SpriteTool("goal", "goal", {}, "assets/flag animation.png", 300, 60, 0, 0, 45, 60, 60, 5, 0, 0.15, 0, 3, 4),
 ];
 
 const player = {
@@ -20,3 +20,44 @@ const player = {
 }
 
 tools.forEach(tool => document.querySelector(`.${tool.category}`).appendChild(tool.button(50)));
+
+let mouse_down = false;
+let selected_tool = null;
+let selected_obj = null;
+
+function tool_select(tool) {
+    selected_obj?.destroy();
+    selected_tool = tool;
+    tool_refresh();
+}
+
+function tool_refresh() {
+    selected_obj = new selected_tool.obj_t(selected_tool);
+    selected_obj.create();
+}
+
+function cell_enter(col, row) {
+    if (mouse_down) {
+        selected_obj?.drag(col, row);
+    } else {
+        selected_obj?.ghost(col, row);
+    }
+}
+
+function cell_mdown(col, row) {
+    selected_obj?.place(col, row);
+}
+
+function cell_mup(col, row) {
+    tool_refresh();
+}
+
+function level_leave() {
+    selected_obj?.hide();
+}
+
+
+document.onmousedown = () => mouse_down = true;
+document.onmouseup = () => mouse_down = false;
+
+document.getElementById("brick").click();
