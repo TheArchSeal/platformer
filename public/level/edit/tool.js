@@ -1,23 +1,27 @@
 class Tool {
-    constructor(obj, name, category) {
-        this.obj = obj;
+    constructor(name, category) {
         this.name = name;
         this.category = category;
-        this.icon = "";
     }
 
-    load() {
-        return new Promise((resolve, reject) => {
-            this.obj.img.onload = () => {
-                const canvas = document.createElement("canvas");
-                const c = canvas.getContext("2d");
-                canvas.width = 50;
-                canvas.height = 50;
-                this.obj.draw(c, 0, 0, canvas.width, canvas.height);
-                this.icon = canvas.toDataURL();
+    button(size) {
+        const icon = this.icon(size);
 
-                resolve();
-            };
-        });
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "tool";
+        input.id = this.name;
+
+        const label = document.createElement("label");
+        label.for = this.name;
+        label.style.width = `${size}px`;
+        label.style.height = `${size}px`;
+        label.appendChild(icon);
+        label.onclick = () => input.click();
+
+        const div = document.createElement("div");
+        div.classList.add("tool");
+        div.append(label, input);
+        return div;
     }
 }

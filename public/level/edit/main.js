@@ -1,18 +1,13 @@
-const tiles = {
-    "brick": ["assets/dungeon tile set.png", 16, 1, 1, true, true],
-    "slate": ["assets/dungeon tile set.png", 16, 1, 5, true, true],
+const tools = [
+    new TileTool("brick", "assets/dungeon tile set.png", 240, 288, 16, 1, 1, true, true, true, true, true, true, false, 0),
+    new TileTool("slate", "assets/dungeon tile set.png", 240, 288, 16, 1, 5, true, true, true, true, true, true, false, 0),
+    new TileTool("platform", "assets/dungeon tile set.png", 240, 288, 16, 1, 10, true, false, true, false, false, false, false, 0),
+    new TileTool("spike", "assets/dungeon tile set.png", 240, 288, 16, 1, 14, false, false, true, true, true, true, true, 0.5),
 
-    "platform": ["assets/dungeon tile set.png", 16, 1, 10, true, false],
+    new SpriteTool("crystal item", "item", { restore_count: 1 }, "assets/pixel purple gem.png", 224, 32, 0, 0, 32, 32, 32, 7, 0, 0.1, 3),
+    new SpriteTool("goal", "goal", {}, "assets/flag animation.png", 300, 60, 0, 0, 45, 60, 60, 5, 0, 0.15, 0)
+];
 
-    "spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false],
-    "left spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 1],
-    "right spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 3],
-    "top spike": ["assets/dungeon tile set.png", 16, 1, 14, false, false, 2]
-};
-const sprites = {
-    "crystal item": ["assets/pixel purple gem.png", 0, 0, 32, 32, 32, 7, 0, 0.1, 3],
-    "goal": ["assets/flag animation.png", 0, 0, 45, 60, 60, 5, 0, 0.15, 0]
-};
 const player = {
     "player idle": ["assets/player idle 48x48.png", 14, 11, 17, 29, 48, 10, 0, 0.1, 0],
     "player run": ["assets/run cycle 48x48.png", 14, 11, 17, 29, 48, 8, 0, 0.1, 0],
@@ -24,37 +19,4 @@ const player = {
     "player wall land": ["assets/wall land 48x48.png", 18, 8, 17, 29, 48, 2, 0, 0.1, -1],
 }
 
-function tile_tool(name, args) {
-    return new Tool(new Tile(new TileTemplate(
-        ...args.map((arg, i) => i == 0 ? "../play/" + arg : arg)
-    ), 3, 3), name, "tiles");
-}
-function sprite_tool(name, args) {
-    return new Tool(new Sprite(new SpriteTemplate(
-        ...args.map((arg, i) => i == 0 ? "../play/" + arg : arg)
-    )), name, "sprites");
-}
-
-const tools = [
-    ...Object.entries(tiles).map(([val, key]) => tile_tool(val, key)),
-    sprite_tool("player", player["player idle"]),
-    ...Object.entries(sprites).map(([val, key]) => sprite_tool(val, key))
-];
-
-Promise.all(tools.map(tool => tool.load())).then(() => tools.forEach(tool => {
-    const img = document.createElement("img");
-    img.src = tool.icon;
-    img.alt = tool.name;
-
-    const label = document.createElement("label");
-    label.for = tool.name
-    label.appendChild(img);
-
-    const input = document.createElement("input");
-    input.type = "radio";
-    input.name = "tool";
-    input.id = tool.name;
-
-    label.onclick = () => input.click();
-    document.querySelector(`.${tool.category}`).append(label, input);
-}));
+tools.forEach(tool => document.querySelector(`.${tool.category}`).appendChild(tool.button(50)));

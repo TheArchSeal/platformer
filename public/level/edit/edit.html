@@ -7,20 +7,10 @@
     <title>Edit</title>
     <link rel="stylesheet" href="style.css">
 
-    <script src="../play/template.js" defer></script>
-    <script src="../play/hitbox.js" defer></script>
-
-    <script src="../play/tile.js" defer></script>
-    <script src="../play/sprite.js" defer></script>
-    <script src="../play/background.js" defer></script>
-
-    <script src="../play/object.js" defer></script>
-    <script src="../play/item.js" defer></script>
-    <script src="../play/goal.js" defer></script>
-    <script src="../play/player.js" defer></script>
-
+    <script src="resize.js" defer></script>
     <script src="tool.js" defer></script>
-
+    <script src="tile.js" defer></script>
+    <script src="sprite.js" defer></script>
     <script src="main.js" defer></script>
 </head>
 
@@ -31,7 +21,13 @@
         <h2>Sprites</h2>
         <div class="sprites"></div>
     </div>
-    <canvas></canvas>
+    <div class="options">
+        <label for="width">Width</label>
+        <input type="number" name="width" id="width" min="1" value="10" onchange="resize()">
+        <label for="height">Height</label>
+        <input type="number" name="height" id="height" min="1" value="10" onchange="resize()">
+    </div>
+    <table></table>
 </body>
 
 </html>

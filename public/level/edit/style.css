@@ -1,0 +1,45 @@
+body {
+    display: flex;
+}
+
+.tool {
+    display: flex;
+}
+
+.tool label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.tool:not(:first-child) label {
+    border-top: none;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+}
+
+.options input {
+    width: 50px;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    height: fit-content;
+    border-collapse: collapse;
+    background-color: #181425;
+}
+
+table tr,
+table td {
+    padding: 0;
+    border: 1px solid black;
+}
+
+.cell {
+    aspect-ratio: 1 / 1;
+}
