@@ -45,19 +45,20 @@ class TileTool extends Tool {
         const cos = (r % 2 - 1) * (r - 1);
         const rotate_x = (x, y) => cos * x - sin * y;
         const rotate_y = (x, y) => sin * x + cos * y;
+        const rotate = (x, y) => [rotate_x(x, y), rotate_y(x, y)];
 
-        if (r === 2) x = w - x - 1;
-        if (r === 1) y = h - y - 1;
+        w--;
+        h--;
+        if (rotate_x(1, 1) < 0) x = w - x;
+        if (rotate_y(1, 1) < 0) y = h - y;
+        [x, y] = rotate(x, y);
+        [w, h] = rotate(w, h);
 
-        const extendable_x = r % 2 === 0 ? this.extendable_x : this.extendable_y;
-        const extendable_y = r % 2 === 1 ? this.extendable_x : this.extendable_y;
-        const offset_x = !extendable_x || x === 0 ? 0 : x + 1 === w ? 2 : 1;
-        const offset_y = !extendable_y || y === 0 ? 0 : y + 1 === h ? 2 : 1;
-
+        const offset_x = !this.extendable_x || x === 0 ? 0 : x === w ? 2 : 1;
+        const offset_y = !this.extendable_y || y === 0 ? 0 : y === h ? 2 : 1;
         const width = this.src_w / this.tile_size
         const height = this.src_h / this.tile_size
-        const marginLeft = rotate_x(this.x + offset_x, this.y + offset_x);
-        const marginTop = rotate_y(this.x + offset_y, this.y + offset_y);
+        const [marginLeft, marginTop] = rotate(this.x + offset_x, this.y + offset_y);
 
         img.style.transformOrigin = `${50 / width}% ${50 / height}%`;
         img.style.rotate = `${-90 * r}deg`
@@ -82,6 +83,12 @@ class TileObj extends Obj {
         this.r = 0;
         this.corner_x = null;
         this.corner_y = null;
+    }
+
+    clone() {
+        const obj = new TileObj(this.tool);
+        obj.r = this.r;
+        return obj;
     }
 
     sub_tile(x, y, w, h) { return this.tool.sub_tile(x, y, w, h, this.r); }

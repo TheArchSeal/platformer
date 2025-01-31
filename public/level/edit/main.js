@@ -28,11 +28,12 @@ let selected_obj = null;
 function tool_select(tool) {
     selected_obj?.destroy();
     selected_tool = tool;
-    tool_refresh();
+    selected_obj = new selected_tool.obj_t(selected_tool);
+    selected_obj.create();
 }
 
 function tool_refresh() {
-    selected_obj = new selected_tool.obj_t(selected_tool);
+    selected_obj = selected_obj.clone();
     selected_obj.create();
 }
 

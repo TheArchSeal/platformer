@@ -64,6 +64,10 @@ class SpriteObj extends Obj {
         super(tool, tool.tile_w, tool.tile_h);
     }
 
+    clone() {
+        return new SpriteObj(tool);
+    }
+
     sub_tile(x, y, w, h) { return this.tool.sub_tile(x, y, w, h); }
 
     drag(x, y) { this.move(x, y); }

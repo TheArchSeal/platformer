@@ -43,6 +43,7 @@ class Obj {
     }
 
     create() {
+        this.elements = [];
         for (let j = 0; j < this.h; j++) {
             this.elements[j] = [];
             for (let i = 0; i < this.w; i++) {
