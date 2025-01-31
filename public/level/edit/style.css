@@ -51,9 +51,10 @@ img {
 }
 
 .cell {
+    user-select: none;
     position: relative;
     aspect-ratio: 1 / 1;
-    user-select: none;
+    image-rendering: crisp-edges;
 }
 
 .cell div {

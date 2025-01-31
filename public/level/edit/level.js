@@ -16,9 +16,9 @@ function create_col() {
     const div = document.createElement("div");
     div.classList.add("cell");
 
-    div.onmouseenter = () => cell_enter(col.cellIndex, col.parentElement.rowIndex);;
-    div.onmousedown = () => cell_mdown(col.cellIndex, col.parentElement.rowIndex);;
-    div.onmouseup = () => cell_mup(col.cellIndex, col.parentElement.rowIndex);;
+    div.onmouseenter = () => cell_enter(col.cellIndex, col.parentElement.rowIndex);
+    div.onmousedown = () => cell_mdown(col.cellIndex, col.parentElement.rowIndex);
+    div.onmouseup = () => cell_mup(col.cellIndex, col.parentElement.rowIndex);
 
     col.appendChild(div);
     return col;

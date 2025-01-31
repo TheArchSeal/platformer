@@ -46,7 +46,7 @@ class Obj {
         for (let j = 0; j < this.h; j++) {
             this.elements[j] = [];
             for (let i = 0; i < this.w; i++) {
-                const elem = this.tool.sub_tile(i, j, this.w, this.h);
+                const elem = this.sub_tile(i, j, this.w, this.h);
                 this.elements[j][i] = elem;
             }
         }
@@ -66,7 +66,8 @@ class Obj {
         this.w = w;
         this.h = h;
         this.create();
-        this.move(x, y);
+        if (x !== null && y !== null)
+            this.move(x, y);
     }
 
     hide() {

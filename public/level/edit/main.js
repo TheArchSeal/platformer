@@ -56,8 +56,18 @@ function level_leave() {
     selected_obj?.hide();
 }
 
+function tool_rotate() {
+    selected_obj?.rotate();
+}
 
 document.onmousedown = () => mouse_down = true;
 document.onmouseup = () => mouse_down = false;
+document.onkeydown = e => {
+    switch (e.key) {
+        case "r":
+            tool_rotate();
+            break;
+    }
+}
 
-document.getElementById("brick").click();
+document.getElementById("platform").click();
