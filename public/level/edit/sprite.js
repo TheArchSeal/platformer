@@ -75,5 +75,5 @@ class SpriteObj extends Obj {
 
     drag(x, y) { this.move(x, y); }
 
-    rotate() { }
+    rotate(x, y) { }
 }

@@ -1,5 +1,5 @@
 class TileTool extends Tool {
-    constructor(name, src, src_w, src_h, tile_size, x, y, extendable_x, extendable_y, collide_top, collide_bottom, collide_left, collide_right, deadly, padding) {
+    constructor(name, src, src_w, src_h, tile_size, x, y, extendable_x, extendable_y, draggable_x, draggable_y, collide_top, collide_bottom, collide_left, collide_right, deadly, padding) {
         super(name, "tiles", TileObj);
         this.src = src;
         this.src_w = src_w;
@@ -9,6 +9,8 @@ class TileTool extends Tool {
         this.y = y;
         this.extendable_x = extendable_x;
         this.extendable_y = extendable_y;
+        this.draggable_x = draggable_x;
+        this.draggable_y = draggable_y;
         this.collide_top = collide_top;
         this.collide_bottom = collide_bottom;
         this.collide_left = collide_left;
@@ -93,9 +95,11 @@ class TileObj extends Obj {
 
     sub_tile(x, y, w, h) { return this.tool.sub_tile(x, y, w, h, this.r); }
 
-    hide(x, y) {
+    ghost(x, y) {
+        this.corner_x = null;
+        this.corner_y = null;
         this.resize(1, 1);
-        super.hide(x, y);
+        super.ghost(x, y);
     }
 
     place(x, y) {
@@ -110,6 +114,11 @@ class TileObj extends Obj {
         if (this.corner_y === null)
             this.corner_y = y;
 
+        let [draggable_x, draggable_y] = [this.tool.draggable_x, this.tool.draggable_y];
+        if (this.r % 2 === 1) [draggable_x, draggable_y] = [draggable_y, draggable_x]
+        if (!draggable_x) x = this.corner_x;
+        if (!draggable_y) y = this.corner_y;
+
         const new_x = Math.min(x, this.corner_x);
         const new_y = Math.min(y, this.corner_y);
         const new_w = Math.abs(x - this.corner_x) + 1;
@@ -118,8 +127,9 @@ class TileObj extends Obj {
         this.resize(new_w, new_h);
     }
 
-    rotate() {
+    rotate(x, y) {
         this.r = (this.r + 1) % 4;
-        this.resize(this.w, this.h);
+        if (x !== null && y !== null)
+            this.drag(x, y);
     }
 }

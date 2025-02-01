@@ -1,9 +1,15 @@
 const level = document.querySelector(".level table");
-let w;
-let h;
+
+function get_hovered() {
+    return document.querySelector(".cell:hover");
+}
 
 function get_cell(col, row) {
     return document.querySelector(`tr:nth-child(${row + 1}) td:nth-child(${col + 1}) .cell`);
+}
+
+function get_pos(cell) {
+    return cell ? [cell.closest("td").cellIndex, cell.closest("tr").rowIndex] : [null, null];
 }
 
 function create_row() {
@@ -18,10 +24,10 @@ function create_col() {
     cell.classList.add("cell");
     border.classList.add("border")
 
-    col.onmouseenter = () => cell_enter(col.cellIndex, col.parentElement.rowIndex);
-    col.onclick = () => cell_click(col.cellIndex, col.parentElement.rowIndex);
-    col.onmousedown = () => cell_mdown(col.cellIndex, col.parentElement.rowIndex);
-    col.onmouseup = () => cell_mup(col.cellIndex, col.parentElement.rowIndex);
+    cell.onmouseenter = () => cell_enter(...get_pos(cell));
+    cell.onclick = () => cell_click(...get_pos(cell));
+    cell.onmousedown = () => cell_mdown(...get_pos(cell));
+    cell.onmouseup = () => cell_mup(...get_pos(cell));
 
     col.appendChild(border);
     col.appendChild(cell);
@@ -29,8 +35,8 @@ function create_col() {
 }
 
 function resize() {
-    w = document.getElementById("width").value;
-    h = document.getElementById("height").value;
+    const w = parseInt(document.getElementById("width").value);
+    const h = parseInt(document.getElementById("height").value);
 
     for (let i = level.childElementCount; i < h; i++)
         level.appendChild(create_row());
@@ -44,6 +50,14 @@ function resize() {
             child.lastChild?.remove();
     }
 };
+
+function get_options() {
+    const w = parseInt(document.getElementById("width").value);
+    const h = parseInt(document.getElementById("height").value);
+    const dash_count = parseInt(document.getElementById("dash_count").value);
+
+    return { w, h, dash_count };
+}
 
 level.onmouseleave = () => level_leave();
 resize();

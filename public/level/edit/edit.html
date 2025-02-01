@@ -11,6 +11,8 @@
     <script src="tool.js" defer></script>
     <script src="tile.js" defer></script>
     <script src="sprite.js" defer></script>
+    <script src="player.js" defer></script>
+    <script src="compile.js" defer></script>
     <script src="main.js" defer></script>
 </head>
 
@@ -20,13 +22,15 @@
         <div class="misc">
             <div class="tool">
                 <label for="select">Select</label>
-                <input type="radio" name="tool" id="select" onclick="tool_select(null)">
+                <input type="radio" name="tool" id="select" onclick="tool_select(null)" checked>
             </div>
         </div>
         <h2>Tiles</h2>
         <div class="tiles"></div>
         <h2>Sprites</h2>
         <div class="sprites"></div>
+        <h2>Player</h2>
+        <div class="player"></div>
     </div>
     <div class="options">
         <h2>Options</h2>
@@ -34,6 +38,11 @@
         <input type="number" name="width" id="width" min="1" value="40" onchange="resize()">
         <label for="height">Height</label>
         <input type="number" name="height" id="height" min="1" value="20" onchange="resize()">
+        <label for="dash_count">Dashes</label>
+        <input type="number" name="dash_count" id="dash_count" min="0" value="1">
+
+        <h2>Save</h2>
+        <button onclick="export_log()">Export</button>
     </div>
     <div class="level">
         <table></table>
