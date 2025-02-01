@@ -16,6 +16,8 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50px;
+    height: 50px;
     border: 1px solid black;
 }
 
@@ -44,17 +46,36 @@ img {
     background-color: #181425;
 }
 
-.level table tr,
-.level table td {
+.level tr,
+.level td {
     padding: 0;
-    border: 1px solid black;
+}
+
+.level td {
+    position: relative;
+}
+
+
+.border {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+tr:not(:first-child) .border {
+    border-top: 1px solid black;
+}
+
+td:not(:first-child) .border {
+    border-left: 1px solid black;
 }
 
 .cell {
     user-select: none;
     position: relative;
     aspect-ratio: 1 / 1;
-    image-rendering: crisp-edges;
+    image-rendering: pixelated;
 }
 
 .cell div {
@@ -63,4 +84,24 @@ img {
 
 .ghost {
     opacity: 50%;
+}
+
+:has(.selected.top)>.border {
+    border-top: 1px solid cyan;
+    z-index: 1;
+}
+
+:has(.selected.left)>.border {
+    border-left: 1px solid cyan;
+    z-index: 1;
+}
+
+:has(.selected.bottom)>.border {
+    border-bottom: 1px solid cyan;
+    z-index: 1;
+}
+
+:has(.selected.right)>.border {
+    border-right: 1px solid cyan;
+    z-index: 1;
 }

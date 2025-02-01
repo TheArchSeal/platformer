@@ -44,10 +44,15 @@ class SpriteTool extends Tool {
         img.src = "/level/play/" + this.src;
         img.alt = this.name;
 
-        img.style.width = `${100 * this.src_w * w / this.w}%`;
-        img.style.height = `${100 * this.src_h * h / this.h}%`;
-        img.style.marginLeft = `${-100 * (this.x + this.frame_width * this.frame_offset + this.w * x) / this.w}%`;
-        img.style.marginTop = `${-100 * (this.y + this.h * y) / this.h}%`;
+        const width = this.src_w * w / this.w;
+        const height = this.src_h * h / this.h;
+        const marginLeft = (this.x + this.frame_width * this.frame_offset) / this.w + x;
+        const marginTop = this.y / this.h + y;
+
+        img.style.width = `${100 * width}%`;
+        img.style.height = `${100 * height}%`;
+        img.style.marginLeft = `${-100 * marginLeft}%`;
+        img.style.marginTop = `${-100 * marginTop}%`;
 
         const div = document.createElement("div");
         div.style.width = "100%";
@@ -64,9 +69,7 @@ class SpriteObj extends Obj {
         super(tool, tool.tile_w, tool.tile_h);
     }
 
-    clone() {
-        return new SpriteObj(tool);
-    }
+    clone() { return new SpriteObj(this.tool); }
 
     sub_tile(x, y, w, h) { return this.tool.sub_tile(x, y, w, h); }
 

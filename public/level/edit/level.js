@@ -13,14 +13,18 @@ function create_row() {
 
 function create_col() {
     const col = document.createElement("td");
-    const div = document.createElement("div");
-    div.classList.add("cell");
+    const cell = document.createElement("div");
+    const border = document.createElement("div")
+    cell.classList.add("cell");
+    border.classList.add("border")
 
     col.onmouseenter = () => cell_enter(col.cellIndex, col.parentElement.rowIndex);
+    col.onclick = () => cell_click(col.cellIndex, col.parentElement.rowIndex);
     col.onmousedown = () => cell_mdown(col.cellIndex, col.parentElement.rowIndex);
     col.onmouseup = () => cell_mup(col.cellIndex, col.parentElement.rowIndex);
 
-    col.appendChild(div);
+    col.appendChild(border);
+    col.appendChild(cell);
     return col;
 }
 

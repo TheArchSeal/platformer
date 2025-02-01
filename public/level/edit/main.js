@@ -1,4 +1,4 @@
-const tools = [
+const tools = new Set([
     new TileTool("brick", "assets/dungeon tile set.png", 240, 288, 16, 1, 1, true, true, true, true, true, true, false, 0),
     new TileTool("slate", "assets/dungeon tile set.png", 240, 288, 16, 1, 5, true, true, true, true, true, true, false, 0),
     new TileTool("platform", "assets/dungeon tile set.png", 240, 288, 16, 1, 10, true, false, true, false, false, false, false, 0),
@@ -6,7 +6,7 @@ const tools = [
 
     new SpriteTool("crystal item", "item", { restore_count: 1 }, "assets/pixel purple gem.png", 224, 32, 0, 0, 32, 32, 32, 7, 0, 0.1, 3, 2, 2),
     new SpriteTool("goal", "goal", {}, "assets/flag animation.png", 300, 60, 0, 0, 45, 60, 60, 5, 0, 0.15, 0, 3, 4),
-];
+]);
 
 const player = {
     "player idle": ["assets/player idle 48x48.png", 14, 11, 17, 29, 48, 10, 0, 0.1, 0],
@@ -21,44 +21,79 @@ const player = {
 
 tools.forEach(tool => document.querySelector(`.${tool.category}`).appendChild(tool.button(50)));
 
+const objects = new Set();
+
 let mouse_down = false;
 let selected_tool = null;
+let tool_obj = null;
 let selected_obj = null;
 
 function tool_select(tool) {
-    selected_obj?.destroy();
+    tool_obj?.destroy();
+    tool_obj = null;
+    selected_obj?.deselect();
+    selected_obj = null;
+
+    if (tool) {
+        tool_obj = new tool.obj_t(tool);
+        tool_obj.create();
+    }
+
     selected_tool = tool;
-    selected_obj = new selected_tool.obj_t(selected_tool);
-    selected_obj.create();
 }
 
-function tool_refresh() {
-    selected_obj = selected_obj.clone();
-    selected_obj.create();
+function obj_select(obj) {
+    if (selected_tool === null) {
+        selected_obj?.deselect();
+        tool_obj?.destroy();
+        tool_obj = null;
+        selected_obj = obj;
+        selected_obj.select();
+    }
+}
+
+function obj_delete() {
+    if (selected_obj) {
+        selected_obj.destroy();
+        objects.delete(selected_obj);
+        selected_obj = null;
+    }
 }
 
 function cell_enter(col, row) {
     if (mouse_down) {
-        selected_obj?.drag(col, row);
+        tool_obj?.drag(col, row);
     } else {
-        selected_obj?.ghost(col, row);
+        tool_obj?.ghost(col, row);
+    }
+}
+
+function cell_click(col, row) {
+    if (selected_tool === null) {
+        selected_obj?.deselect();
+        selected_obj = null;
     }
 }
 
 function cell_mdown(col, row) {
-    selected_obj?.place(col, row);
+    tool_obj?.place(col, row);
 }
 
 function cell_mup(col, row) {
-    tool_refresh();
+    if (tool_obj) {
+        objects.add(tool_obj);
+        // tool_obj = new tool_obj.constructor(tool_obj.tool);
+        tool_obj = tool_obj.clone();
+        tool_obj.create();
+    }
 }
 
 function level_leave() {
-    selected_obj?.hide();
+    tool_obj?.hide();
 }
 
 function tool_rotate() {
-    selected_obj?.rotate();
+    tool_obj?.rotate();
 }
 
 document.onmousedown = () => mouse_down = true;
@@ -67,6 +102,11 @@ document.onkeydown = e => {
     switch (e.key) {
         case "r":
             tool_rotate();
+            break;
+
+        case "Delete":
+        case "Backspace":
+            obj_delete();
             break;
     }
 }

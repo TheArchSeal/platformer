@@ -15,11 +15,10 @@ class Tool {
         input.onclick = () => tool_select(this);
 
         const label = document.createElement("label");
-        label.for = this.name;
+        label.htmlFor = this.name;
         label.style.width = `${size}px`;
         label.style.height = `${size}px`;
         label.appendChild(icon);
-        label.onclick = () => input.click();
 
         const div = document.createElement("div");
         div.classList.add("tool");
@@ -48,6 +47,16 @@ class Obj {
             this.elements[j] = [];
             for (let i = 0; i < this.w; i++) {
                 const elem = this.sub_tile(i, j, this.w, this.h);
+                elem.onclick = e => {
+                    obj_select(this);
+                    e.stopPropagation();
+                };
+
+                if (j === 0) elem.classList.add("top");
+                if (j + 1 === this.h) elem.classList.add("bottom");
+                if (i === 0) elem.classList.add("left");
+                if (i + 1 === this.w) elem.classList.add("right");
+
                 this.elements[j][i] = elem;
             }
         }
@@ -95,5 +104,13 @@ class Obj {
     place(x, y) {
         this.move(x, y);
         this.forEach(elem => elem.classList.remove("ghost"));
+    }
+
+    select() {
+        this.forEach(elem => elem.classList.add("selected"));
+    }
+
+    deselect() {
+        this.forEach(elem => elem.classList.remove("selected"));
     }
 }

@@ -105,6 +105,11 @@ class TileObj extends Obj {
     }
 
     drag(x, y) {
+        if (this.corner_x === null)
+            this.corner_x = x;
+        if (this.corner_y === null)
+            this.corner_y = y;
+
         const new_x = Math.min(x, this.corner_x);
         const new_y = Math.min(y, this.corner_y);
         const new_w = Math.abs(x - this.corner_x) + 1;
