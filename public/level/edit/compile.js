@@ -46,7 +46,7 @@ function item_recepie(item, toolname) {
         toolname,
         item.x,
         item.y,
-        item.data.restore_count
+        item.tool.data.restore_count
     ];
 }
 
@@ -66,71 +66,101 @@ function player_recepie(player, dash_count) {
     ];
 }
 
-function compile(options) {
+function background_recepie() {
+    // TODO: implement
+    return null;
+}
+
+function level_recepie(level, player, objects, items, goals, background) {
+    return [
+        level.w,
+        level.h,
+        player,
+        objects,
+        items,
+        goals,
+        background,
+        level.level_top || null,
+        level.level_bottom || null,
+        level.level_left || null,
+        level.level_right || null
+    ];
+}
+
+function compile() {
     const game_tiles = {};
     const game_sprites = {};
-    const level_objects = []
-    const level_items = [];
-    const level_goals = [];
-    let level_player = null;
+    const game_levels = {};
 
-    for (obj of objects) {
-        switch (obj.tool.category) {
-            case "tiles": {
-                const toolname = `${obj.tool.name} (${obj.r})`;
-                if (!(toolname in game_tiles))
-                    game_tiles[toolname] = tile_recepie(obj.tool, obj.r);
-                level_objects.push(object_recepie(obj, toolname))
-            } break;
+    for (const level of levels) {
+        const level_objects = []
+        const level_items = [];
+        const level_goals = [];
+        let level_player = null;
 
-            case "sprites": {
-                const toolname = obj.tool.name;
-                if (!(toolname in game_sprites))
-                    game_sprites[toolname] = sprite_recepie(obj.tool);
+        for (const obj of level.objects) {
+            switch (obj.tool.category) {
+                case "tiles": {
+                    const toolname = `${obj.tool.name} (${obj.r})`;
+                    if (!(toolname in game_tiles))
+                        game_tiles[toolname] = tile_recepie(obj.tool, obj.r);
+                    level_objects.push(object_recepie(obj, toolname))
+                } break;
 
-                switch (obj.tool.type) {
-                    case "item":
-                        level_items.push(item_recepie(obj, toolname))
-                        break;
-
-                    case "goal":
-                        level_goals.push(goal_recepie(obj, toolname))
-                        break;
-                }
-            } break;
-
-            case "player": {
-                obj.tool.sprites.forEach(sprite => {
-                    const toolname = sprite.name;
+                case "sprites": {
+                    const toolname = obj.tool.name;
                     if (!(toolname in game_sprites))
-                        game_sprites[toolname] = sprite_recepie(sprite);
-                });
-                if (level_player === null)
-                    level_player = player_recepie(obj, options.dash_count);
-                else return { "error": "More than one player placed." };
-            } break;
+                        game_sprites[toolname] = sprite_recepie(obj.tool);
+
+                    switch (obj.tool.type) {
+                        case "item":
+                            level_items.push(item_recepie(obj, toolname))
+                            break;
+
+                        case "goal":
+                            level_goals.push(goal_recepie(obj, toolname))
+                            break;
+                    }
+                } break;
+
+                case "player": {
+                    obj.tool.sprites.forEach(sprite => {
+                        const toolname = sprite.name;
+                        if (!(toolname in game_sprites))
+                            game_sprites[toolname] = sprite_recepie(sprite);
+                    });
+                    if (level_player === null)
+                        level_player = player_recepie(obj, level.dash_count);
+                    else return { "error": "More than one player per screen." };
+                } break;
+            }
         }
+
+        if (level_player === null)
+            return { "error": "No player in screen." };
+
+        if (level.name in game_levels)
+            return { "error": "Duplicate level names." };
+        else game_levels[level.name] = level_recepie(
+            level,
+            level_player,
+            level_objects,
+            level_items,
+            level_goals,
+            background_recepie() // TODO: change after implement
+        );
+
     }
 
-    if (level_player === null)
-        return { "error": "No player placed." };
+    const start_level = document.getElementById("start_level").value;
+    if (!start_level) return { "error": "No start level selected." }
 
     const game = {
         "data": [
             game_tiles,
             game_sprites,
-            {
-                "1": [
-                    options.w,
-                    options.h,
-                    level_player,
-                    level_objects,
-                    level_items,
-                    level_goals,
-                    []
-                ]
-            },
-            "1"
+            game_levels,
+            start_level
         ]
     }
 
@@ -138,7 +168,6 @@ function compile(options) {
 }
 
 function export_log() {
-    const options = get_options();
-    const game = compile(options);
+    const game = compile();
     console.log(JSON.stringify(game));
 }

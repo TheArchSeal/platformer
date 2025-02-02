@@ -25,12 +25,12 @@
                 <input type="radio" name="tool" id="select" onclick="tool_select(null)" checked>
             </div>
         </div>
-        <h3>Tiles</h3>
-        <div class="tiles"></div>
-        <h3>Sprites</h3>
-        <div class="sprites"></div>
         <h3>Player</h3>
         <div class="player"></div>
+        <h3>Objects</h3>
+        <div class="tiles"></div>
+        <h3>Items</h3>
+        <div class="sprites"></div>
     </div>
     <div class="options">
         <h2>Options</h2>
@@ -65,9 +65,12 @@
         <input type="text" name="name" id="name" onchange="curr_level?.rename()">
         <button onclick="delete_level()">Delete</button>
 
-        <label for="levels">Select</label>
+        <label for="levels">Level</label>
         <select name="levels" id="levels" onchange="select_level(this.value)"></select>
         <button onclick="new_level()">New</button>
+
+        <label for="start_level">Start</label>
+        <select name="start_level" id="start_level"></select>
 
         <h2>Save</h2>
         <button onclick="export_log()">Export</button>

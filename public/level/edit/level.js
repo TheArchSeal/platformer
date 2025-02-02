@@ -1,10 +1,11 @@
 class Level {
     static selector_ids = [
         "levels",
+        "start_level",
         "level_top",
         "level_bottom",
         "level_left",
-        "level_right",
+        "level_right"
     ];
 
     constructor(name) {
@@ -60,7 +61,7 @@ class Level {
         const name = document.getElementById("name").value;
         if (name) {
             this.name = name
-            this.menu_options.forEach(option => {
+            Object.values(this.menu_options).forEach(option => {
                 option.value = name;
                 option.textContent = name;
             });
@@ -112,13 +113,11 @@ class Level {
         const contianer = document.querySelector(".level");
         contianer.replaceChildren(this.table);
         document.getElementById("levels").value = this.name;
-        Level.selector_ids.forEach(id => {
-            if (id !== "levels") {
-                for (const option of document.getElementById(id).children) {
-                    if (this.menu_options[id] === option)
-                        option.classList.add("hidden");
-                    else option.classList.remove("hidden");
-                }
+        ["level_top", "level_bottom", "level_left", "level_right"].forEach(id => {
+            for (const option of document.getElementById(id).children) {
+                if (this.menu_options[id] === option)
+                    option.classList.add("hidden");
+                else option.classList.remove("hidden");
             }
         });
     }
