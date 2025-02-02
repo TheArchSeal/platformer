@@ -21,7 +21,7 @@ class SpriteTool extends Tool {
 
     icon(size) {
         const img = document.createElement("img");
-        img.src = "/level/play/" + this.src;
+        img.src = this.src;
         img.alt = this.name;
 
         const scale = size / Math.max(this.w, this.h);
@@ -41,7 +41,7 @@ class SpriteTool extends Tool {
 
     sub_tile(x, y, w, h) {
         const img = document.createElement("img");
-        img.src = "/level/play/" + this.src;
+        img.src = this.src;
         img.alt = this.name;
 
         const width = this.src_w * w / this.w;

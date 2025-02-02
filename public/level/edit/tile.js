@@ -21,7 +21,7 @@ class TileTool extends Tool {
 
     icon(size) {
         const img = document.createElement("img");
-        img.src = "/level/play/" + this.src;
+        img.src = this.src;
         img.alt = this.name;
 
         img.width = this.src_w * size / (this.tile_size * 3);
@@ -40,7 +40,7 @@ class TileTool extends Tool {
 
     sub_tile(x, y, w, h, r) {
         const img = document.createElement("img");
-        img.src = "/level/play/" + this.src;
+        img.src = this.src;
         img.alt = this.name;
 
         const sin = (r % 2) * (r - 2);

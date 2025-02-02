@@ -25,21 +25,49 @@
                 <input type="radio" name="tool" id="select" onclick="tool_select(null)" checked>
             </div>
         </div>
-        <h2>Tiles</h2>
+        <h3>Tiles</h3>
         <div class="tiles"></div>
-        <h2>Sprites</h2>
+        <h3>Sprites</h3>
         <div class="sprites"></div>
-        <h2>Player</h2>
+        <h3>Player</h3>
         <div class="player"></div>
     </div>
     <div class="options">
         <h2>Options</h2>
         <label for="width">Width</label>
-        <input type="number" name="width" id="width" min="1" value="40" onchange="resize()">
+        <input type="number" name="width" id="width" min="1" value="40" onchange="curr_level?.resize()">
         <label for="height">Height</label>
-        <input type="number" name="height" id="height" min="1" value="20" onchange="resize()">
+        <input type="number" name="height" id="height" min="1" value="20" onchange="curr_level?.resize()">
         <label for="dash_count">Dashes</label>
-        <input type="number" name="dash_count" id="dash_count" min="0" value="1">
+        <input type="number" name="dash_count" id="dash_count" min="0" value="1"
+            onchange="curr_level?.update_inherited()">
+
+        <h3>Transitions</h3>
+        <label for="level_top">North Exit</label>
+        <select name="level_top" id="level_top" onchange="curr_level?.update_transitions()">
+            <option value="">Death</option>
+        </select>
+        <label for="level_bottom">South Exit</label>
+        <select name="level_bottom" id="level_bottom" onchange="curr_level?.update_transitions()">
+            <option value="">Death</option>
+        </select>
+        <label for="level_left">West Exit</label>
+        <select name="level_left" id="level_left" onchange="curr_level?.update_transitions()">
+            <option value="">Death</option>
+        </select>
+        <label for="level_right">East Exit</label>
+        <select name="level_right" id="level_right" onchange="curr_level?.update_transitions()">
+            <option value="">Death</option>
+        </select>
+
+        <h3>Level</h3>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" onchange="curr_level?.rename()">
+        <button onclick="delete_level()">Delete</button>
+
+        <label for="levels">Select</label>
+        <select name="levels" id="levels" onchange="select_level(this.value)"></select>
+        <button onclick="new_level()">New</button>
 
         <h2>Save</h2>
         <button onclick="export_log()">Export</button>

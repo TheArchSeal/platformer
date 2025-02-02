@@ -1,27 +1,28 @@
 const tools = new Set([
-    new TileTool("brick", "assets/dungeon tile set.png", 240, 288, 16, 1, 1, true, true, true, true, true, true, true, true, false, 0),
-    new TileTool("slate", "assets/dungeon tile set.png", 240, 288, 16, 1, 5, true, true, true, true, true, true, true, true, false, 0),
-    new TileTool("platform", "assets/dungeon tile set.png", 240, 288, 16, 1, 10, true, false, true, false, true, false, false, false, false, 0),
-    new TileTool("spike", "assets/dungeon tile set.png", 240, 288, 16, 1, 14, false, false, true, false, true, true, true, true, true, 0.5),
+    new TileTool("brick", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 1, 1, true, true, true, true, true, true, true, true, false, 0),
+    new TileTool("slate", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 1, 5, true, true, true, true, true, true, true, true, false, 0),
+    new TileTool("platform", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 1, 10, true, false, true, false, true, false, false, false, false, 0),
+    new TileTool("spike", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 1, 14, false, false, true, false, true, true, true, true, true, 0.5),
 
-    new SpriteTool("crystal item", "item", { restore_count: 1 }, "assets/pixel purple gem.png", 224, 32, 0, 0, 32, 32, 32, 7, 0, 0.1, 3, 2, 2),
-    new SpriteTool("goal", "goal", {}, "assets/flag animation.png", 300, 60, 0, 0, 45, 60, 60, 5, 0, 0.15, 0, 3, 4),
+    new SpriteTool("crystal item", "item", { restore_count: 1 }, "/level/play/assets/pixel purple gem.png", 224, 32, 0, 0, 32, 32, 32, 7, 0, 0.1, 3, 2, 2),
+    new SpriteTool("goal", "goal", {}, "/level/play/assets/flag animation.png", 300, 60, 0, 0, 45, 60, 60, 5, 0, 0.15, 0, 3, 4),
 
     new PlayerTool("player", [
-        new SpriteTool("player idle", "player", {}, "assets/player idle 48x48.png", 480, 48, 14, 11, 17, 29, 48, 10, 0, 0.1, 0, 1.4, 2.5),
-        new SpriteTool("player run", "player", {}, "assets/run cycle 48x48.png", 384, 48, 14, 11, 17, 29, 48, 8, 0, 0.1, 0, 1.4, 2.5),
-        new SpriteTool("player jump", "player", {}, "assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 0, -1, -1, 1.4, 2.5),
-        new SpriteTool("player airborne", "player", {}, "assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 1, -1, -1, 1.4, 2.5),
-        new SpriteTool("player fall", "player", {}, "assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 2, -1, -1, 1.4, 2.5),
-        new SpriteTool("player land", "player", {}, "assets/player land 48x48.png", 432, 48, 14, 11, 17, 29, 48, 9, 0, 0.1, -1, 1.4, 2.5),
-        new SpriteTool("player wall land", "player", {}, "assets/wall slide 48x48.png", 144, 48, 18, 8, 17, 29, 48, 3, 0, 0.1, -1, 1.4, 2.5),
-        new SpriteTool("player wall cling", "player", {}, "assets/wall land 48x48.png", 144, 48, 18, 8, 17, 29, 48, 2, 0, 0.1, -1, 1.4, 2.5),
+        new SpriteTool("player idle", "player", {}, "/level/play/assets/player idle 48x48.png", 480, 48, 14, 11, 17, 29, 48, 10, 0, 0.1, 0, 1.4, 2.5),
+        new SpriteTool("player run", "player", {}, "/level/play/assets/run cycle 48x48.png", 384, 48, 14, 11, 17, 29, 48, 8, 0, 0.1, 0, 1.4, 2.5),
+        new SpriteTool("player jump", "player", {}, "/level/play/assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 0, -1, -1, 1.4, 2.5),
+        new SpriteTool("player airborne", "player", {}, "/level/play/assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 1, -1, -1, 1.4, 2.5),
+        new SpriteTool("player fall", "player", {}, "/level/play/assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 2, -1, -1, 1.4, 2.5),
+        new SpriteTool("player land", "player", {}, "/level/play/assets/player land 48x48.png", 432, 48, 14, 11, 17, 29, 48, 9, 0, 0.1, -1, 1.4, 2.5),
+        new SpriteTool("player wall land", "player", {}, "/level/play/assets/wall slide 48x48.png", 144, 48, 18, 8, 17, 29, 48, 3, 0, 0.1, -1, 1.4, 2.5),
+        new SpriteTool("player wall cling", "player", {}, "/level/play/assets/wall land 48x48.png", 144, 48, 18, 8, 17, 29, 48, 2, 0, 0.1, -1, 1.4, 2.5),
     ])
 ]);
 
 tools.forEach(tool => document.querySelector(`.${tool.category}`).appendChild(tool.button(50)));
 
-const objects = new Set();
+const levels = new Set();
+let curr_level = null;
 
 let mouse_down = false;
 let selected_tool = null;
@@ -52,10 +53,16 @@ function obj_select(obj) {
     }
 }
 
+function obj_deselect() {
+    selected_obj?.deselect();
+    selected_obj = null;
+    tool_obj?.hide();
+}
+
 function obj_delete() {
     if (selected_obj) {
         selected_obj.destroy();
-        objects.delete(selected_obj);
+        curr_level.objects.delete(selected_obj);
         selected_obj = null;
     }
 }
@@ -70,8 +77,7 @@ function cell_enter(col, row) {
 
 function cell_click() {
     if (selected_tool === null) {
-        selected_obj?.deselect();
-        selected_obj = null;
+        obj_deselect();
     }
 }
 
@@ -81,7 +87,7 @@ function cell_mdown(col, row) {
 
 function cell_mup() {
     if (tool_obj) {
-        objects.add(tool_obj);
+        curr_level.objects.add(tool_obj);
         tool_obj = tool_obj.clone();
         tool_obj.create();
     }
@@ -95,19 +101,63 @@ function tool_rotate(col, row) {
     tool_obj?.rotate(col, row);
 }
 
+function new_level() {
+    let name = levels.size + 1;
+    for (const level of levels) {
+        if (parseInt(level.name) >= name)
+            name = parseInt(level.name) + 1;
+    }
+
+    obj_deselect();
+    curr_level = new Level(name.toString());
+    levels.add(curr_level);
+    curr_level.create();
+    curr_level.load();
+}
+
+function delete_level() {
+    let prev = null;
+    let passed = false;
+
+    for (const level of levels) {
+        if (level === curr_level) passed = true;
+        if (passed && prev) break;
+        if (level !== curr_level) prev = level;
+    }
+
+    if (prev) {
+        obj_deselect();
+        curr_level.destroy();
+        levels.delete(curr_level);
+        curr_level = prev;
+        curr_level.load();
+    }
+}
+
+function select_level(name) {
+    for (const level of levels) {
+        if (level.name === name) {
+            obj_deselect();
+            curr_level = level;
+            curr_level.load();
+            break;
+        }
+    }
+}
+
 document.onmousedown = () => mouse_down = true;
 document.onmouseup = () => mouse_down = false;
 document.onkeydown = e => {
     switch (e.key) {
         case "r":
-            tool_rotate(...get_pos(get_hovered()));
+            tool_rotate(...curr_level.get_pos(curr_level.get_hovered()));
             break;
 
         case "Delete":
         case "Backspace":
-            obj_delete(...get_pos(get_hovered()));
+            obj_delete(...curr_level.get_pos(curr_level.get_hovered()));
             break;
     }
 }
 
-// document.getElementById("platform").click();
+new_level();

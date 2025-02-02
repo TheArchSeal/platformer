@@ -5,9 +5,14 @@ body {
     grid-template-columns: min-content min-content auto;
 }
 
+.hidden {
+    display: none;
+}
+
 .toolbar {
     grid-row: 1;
     grid-column: 1;
+    image-rendering: pixelated;
 }
 
 .credits {
@@ -47,7 +52,8 @@ img {
 }
 
 .options input {
-    width: 50px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .level {
@@ -103,22 +109,22 @@ td:not(:first-child) .border {
     opacity: 50%;
 }
 
+:has(.selected)>.border {
+    z-index: 1;
+}
+
 :has(.selected.top)>.border {
     border-top: 1px solid cyan;
-    z-index: 1;
 }
 
 :has(.selected.left)>.border {
     border-left: 1px solid cyan;
-    z-index: 1;
 }
 
 :has(.selected.bottom)>.border {
     border-bottom: 1px solid cyan;
-    z-index: 1;
 }
 
 :has(.selected.right)>.border {
     border-right: 1px solid cyan;
-    z-index: 1;
 }

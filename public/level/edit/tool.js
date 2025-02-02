@@ -90,7 +90,7 @@ class Obj {
         this.x = x;
         this.y = y;
         this.forEach((elem, i, j) => {
-            const cell = get_cell(x + i, y + j);
+            const cell = curr_level.get_cell(x + i, y + j);
             if (cell === null) elem.remove();
             else cell.appendChild(elem);
         });
