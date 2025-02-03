@@ -1,28 +1,28 @@
 "use strict";
 
-const background = new BackgroundBase("/level/play/assets/dungeon tile set.png", 240, 288, 16, "#181425");
+const background = new BackgroundBase("/level/play/assets/dungeon tile set.png", 16, "#181425");
 
 const tools = new Set([
-    new TileTool("brick", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 1, 1, true, true, true, true, true, true, true, true, false, 0),
-    new TileTool("slate", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 1, 5, true, true, true, true, true, true, true, true, false, 0),
-    new TileTool("wood", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 10, 9, false, false, true, true, true, true, true, true, false, 0),
-    new TileTool("platform", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 1, 10, true, false, true, false, true, false, false, false, false, 0),
-    new TileTool("spike", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 1, 14, false, false, true, false, true, true, true, true, true, 0.5),
-    new TileTool("bloody spike", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 3, 14, false, false, true, false, true, true, true, true, true, 0.5),
-    new TileTool("saw", "/level/play/assets/dungeon tile set.png", 240, 288, 16, 10, 15, true, false, true, false, true, true, true, true, true, 0.5),
+    new TileTool("brick", "/level/play/assets/dungeon tile set.png", 16, 1, 1, true, true, true, true, true, true, true, true, false, 0),
+    new TileTool("slate", "/level/play/assets/dungeon tile set.png", 16, 1, 5, true, true, true, true, true, true, true, true, false, 0),
+    new TileTool("wood", "/level/play/assets/dungeon tile set.png", 16, 10, 9, false, false, true, true, true, true, true, true, false, 0),
+    new TileTool("platform", "/level/play/assets/dungeon tile set.png", 16, 1, 10, true, false, true, false, true, false, false, false, false, 0),
+    new TileTool("spike", "/level/play/assets/dungeon tile set.png", 16, 1, 14, false, false, true, false, true, true, true, true, true, 0.5),
+    new TileTool("bloody spike", "/level/play/assets/dungeon tile set.png", 16, 3, 14, false, false, true, false, true, true, true, true, true, 0.5),
+    new TileTool("saw", "/level/play/assets/dungeon tile set.png", 16, 10, 15, true, false, true, false, true, true, true, true, true, 0.5),
 
-    new SpriteTool("crystal item", "item", { restore_count: 1 }, "/level/play/assets/pixel purple gem.png", 224, 32, 0, 0, 32, 32, 32, 7, 0, 0.1, 3, 2, 2),
-    new SpriteTool("goal", "goal", {}, "/level/play/assets/flag animation.png", 300, 60, 0, 0, 45, 60, 60, 5, 0, 0.15, 0, 3, 4),
+    new SpriteTool("crystal item", "item", { restore_count: 1 }, "/level/play/assets/pixel purple gem.png", 0, 0, 32, 32, 32, 7, 0, 0.1, 3, 2, 2),
+    new SpriteTool("goal", "goal", {}, "/level/play/assets/flag animation.png", 0, 0, 45, 60, 60, 5, 0, 0.15, 0, 3, 4),
 
     new PlayerTool("player", [
-        new SpriteTool("player idle", "player", {}, "/level/play/assets/player idle 48x48.png", 480, 48, 14, 11, 17, 29, 48, 10, 0, 0.1, 0, 1.4, 2.5),
-        new SpriteTool("player run", "player", {}, "/level/play/assets/run cycle 48x48.png", 384, 48, 14, 11, 17, 29, 48, 8, 0, 0.1, 0, 1.4, 2.5),
-        new SpriteTool("player jump", "player", {}, "/level/play/assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 0, -1, -1, 1.4, 2.5),
-        new SpriteTool("player airborne", "player", {}, "/level/play/assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 1, -1, -1, 1.4, 2.5),
-        new SpriteTool("player fall", "player", {}, "/level/play/assets/player jump 48x48.png", 144, 48, 14, 11, 17, 29, 48, 1, 2, -1, -1, 1.4, 2.5),
-        new SpriteTool("player land", "player", {}, "/level/play/assets/player land 48x48.png", 432, 48, 14, 11, 17, 29, 48, 9, 0, 0.1, -1, 1.4, 2.5),
-        new SpriteTool("player wall land", "player", {}, "/level/play/assets/wall slide 48x48.png", 144, 48, 18, 8, 17, 29, 48, 3, 0, 0.1, -1, 1.4, 2.5),
-        new SpriteTool("player wall cling", "player", {}, "/level/play/assets/wall land 48x48.png", 144, 48, 18, 8, 17, 29, 48, 2, 0, 0.1, -1, 1.4, 2.5),
+        new SpriteTool("player idle", "player", {}, "/level/play/assets/player idle 48x48.png", 14, 11, 17, 29, 48, 10, 0, 0.1, 0, 1.4, 2.5),
+        new SpriteTool("player run", "player", {}, "/level/play/assets/run cycle 48x48.png", 14, 11, 17, 29, 48, 8, 0, 0.1, 0, 1.4, 2.5),
+        new SpriteTool("player jump", "player", {}, "/level/play/assets/player jump 48x48.png", 14, 11, 17, 29, 48, 1, 0, -1, -1, 1.4, 2.5),
+        new SpriteTool("player airborne", "player", {}, "/level/play/assets/player jump 48x48.png", 14, 11, 17, 29, 48, 1, 1, -1, -1, 1.4, 2.5),
+        new SpriteTool("player fall", "player", {}, "/level/play/assets/player jump 48x48.png", 14, 11, 17, 29, 48, 1, 2, -1, -1, 1.4, 2.5),
+        new SpriteTool("player land", "player", {}, "/level/play/assets/player land 48x48.png", 14, 11, 17, 29, 48, 9, 0, 0.1, -1, 1.4, 2.5),
+        new SpriteTool("player wall land", "player", {}, "/level/play/assets/wall slide 48x48.png", 18, 8, 17, 29, 48, 3, 0, 0.1, -1, 1.4, 2.5),
+        new SpriteTool("player wall cling", "player", {}, "/level/play/assets/wall land 48x48.png", 18, 8, 17, 29, 48, 2, 0, 0.1, -1, 1.4, 2.5),
     ]),
 
     new BackgroundTool("wall", background, 10, 5, 1, 1),

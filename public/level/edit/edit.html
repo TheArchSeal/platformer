@@ -14,6 +14,7 @@
     <script src="player.js" defer></script>
     <script src="background.js" defer></script>
     <script src="compile.js" defer></script>
+    <script src="decompile.js" defer></script>
     <script src="main.js" defer></script>
 </head>
 
@@ -78,11 +79,16 @@
         <select name="start_level" id="start_level"></select>
 
         <h2>Save</h2>
-        <button onclick="export_log()">Export</button>
+        <button onclick="save()">Save</button>
+        <button onclick="load()">Load</button>
+        <button onclick="download()">Export</button>
+        <button onclick="upload_input.click()">Import</button>
+        <input type="file" name="upload_input" id="upload_input" accept=".json" class="hidden" onchange="upload()">
+        <button onclick="log_level()">Log</button>
+
+        <p class="error hidden" id="error">Error: <span id="error_msg"></span></p>
     </div>
-    <div class="level">
-        <table></table>
-    </div>
+    <div class="level"></div>
     <div class="credits">
         <h2>Artist Credit:</h2>
         <ul>

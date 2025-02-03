@@ -9,6 +9,10 @@ body {
     display: none;
 }
 
+.error {
+    color: red;
+}
+
 .toolbar {
     grid-row: 1;
     grid-column: 1;

@@ -1,11 +1,9 @@
 "use strict";
 
 class TileTool extends Tool {
-    constructor(name, src, src_w, src_h, tile_size, x, y, extendable_x, extendable_y, draggable_x, draggable_y, collide_top, collide_bottom, collide_left, collide_right, deadly, padding) {
+    constructor(name, src, tile_size, x, y, extendable_x, extendable_y, draggable_x, draggable_y, collide_top, collide_bottom, collide_left, collide_right, deadly, padding) {
         super(name, "tiles", TileObj);
         this.src = src;
-        this.src_w = src_w;
-        this.src_h = src_h;
         this.tile_size = tile_size;
         this.x = x;
         this.y = y;
@@ -59,8 +57,8 @@ class TileTool extends Tool {
 
         const offset_x = !this.extendable_x || x === 0 ? 0 : x === w ? 2 : 1;
         const offset_y = !this.extendable_y || y === 0 ? 0 : y === h ? 2 : 1;
-        const width = this.src_w / this.tile_size
-        const height = this.src_h / this.tile_size
+        const width = img.naturalWidth / this.tile_size
+        const height = img.naturalHeight / this.tile_size
         const [marginLeft, marginTop] = rotate(this.x + offset_x, this.y + offset_y);
 
         img.style.transformOrigin = `${50 / width}% ${50 / height}%`;

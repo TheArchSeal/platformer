@@ -1,10 +1,8 @@
 "use strict";
 
 class BackgroundBase {
-    constructor(src, src_w, src_h, tile_size, color) {
+    constructor(src, tile_size, color) {
         this.src = src;
-        this.src_w = src_w;
-        this.src_h = src_h;
         this.tile_size = tile_size;
         this.color = color;
     }
@@ -44,8 +42,8 @@ class BackgroundTool extends Tool {
         img.src = this.base.src;
         img.alt = this.name;
 
-        const width = this.base.src_w * w / (this.base.tile_size * this.w);
-        const height = this.base.src_h * h / (this.base.tile_size * this.h);
+        const width = img.naturalWidth * w / (this.base.tile_size * this.w);
+        const height = img.naturalHeight * h / (this.base.tile_size * this.h);
         const marginLeft = this.x + x;
         const marginTop = this.y + y;
 

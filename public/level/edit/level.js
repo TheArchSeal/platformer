@@ -44,7 +44,7 @@ class Level {
     destroy() {
         this.table?.remove();
         this.table = null;
-        this.menu_options.forEach(option => option.remove());
+        Object.values(this.menu_options).forEach(option => option.remove());
         this.menu_options = {};
 
         this.w = null;

@@ -1,13 +1,11 @@
 "use strict";
 
 class SpriteTool extends Tool {
-    constructor(name, type, data, src, src_w, src_h, x, y, w, h, frame_width, frame_count, frame_offset, spf, repeat_cooldown, tile_w, tile_h) {
+    constructor(name, type, data, src, x, y, w, h, frame_width, frame_count, frame_offset, spf, repeat_cooldown, tile_w, tile_h) {
         super(name, "sprites", SpriteObj);
         this.type = type;
         this.data = data;
         this.src = src;
-        this.src_w = src_w;
-        this.src_h = src_h;
         this.x = x;
         this.y = y;
         this.w = w;
@@ -45,8 +43,8 @@ class SpriteTool extends Tool {
         img.src = this.src;
         img.alt = this.name;
 
-        const width = this.src_w * w / this.w;
-        const height = this.src_h * h / this.h;
+        const width = img.naturalWidth * w / this.w;
+        const height = img.naturalHeight * h / this.h;
         const marginLeft = (this.x + this.frame_width * this.frame_offset) / this.w + x;
         const marginTop = this.y / this.h + y;
 

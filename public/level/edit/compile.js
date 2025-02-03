@@ -68,9 +68,24 @@ function player_recepie(player, dash_count) {
     ];
 }
 
-function background_recepie() {
-    // TODO: implement
-    return null;
+function background_tile_recepie(tile) {
+    let sub_tiles = [];
+    tile.forEach((_, i, j) => sub_tiles.push([
+        tile.tool.x + i,
+        tile.tool.y + j,
+        tile.x + i,
+        tile.y + j
+    ]));
+    return sub_tiles;
+}
+
+function background_recepie(background, tiles) {
+    return [
+        background.src,
+        background.tile_size,
+        background.color,
+        tiles
+    ];
 }
 
 function level_recepie(level, player, objects, items, goals, background) {
@@ -98,12 +113,15 @@ function compile() {
         const level_objects = []
         const level_items = [];
         const level_goals = [];
+        const level_background_tiles = [];
         let level_player = null;
+        let background_base = null;
 
         for (const obj of level.objects) {
             switch (obj.tool.category) {
                 case "tiles": {
-                    const toolname = `${obj.tool.name} (${obj.r})`;
+                    const suffix = ` (${obj.r})`;
+                    const toolname = obj.tool.name.endsWith(suffix) ? obj.tool.name : obj.tool.name + suffix;
                     if (!(toolname in game_tiles))
                         game_tiles[toolname] = tile_recepie(obj.tool, obj.r);
                     level_objects.push(object_recepie(obj, toolname))
@@ -125,6 +143,14 @@ function compile() {
                     }
                 } break;
 
+                case "background": {
+                    level_background_tiles.push(...background_tile_recepie(obj));
+                    if (background_base === null)
+                        background_base = obj.tool.base;
+                    else if (background_base !== obj.tool.base)
+                        return { "error": "More than one background per screen." }
+                } break;
+
                 case "player": {
                     obj.tool.sprites.forEach(sprite => {
                         const toolname = sprite.name;
@@ -138,6 +164,8 @@ function compile() {
             }
         }
 
+        if (background_base === null)
+            background_base = background;
         if (level_player === null)
             return { "error": "No player in screen." };
 
@@ -149,9 +177,8 @@ function compile() {
             level_objects,
             level_items,
             level_goals,
-            background_recepie() // TODO: change after implement
+            background_recepie(background_base, level_background_tiles)
         );
-
     }
 
     const start_level = document.getElementById("start_level").value;
@@ -169,7 +196,27 @@ function compile() {
     return game;
 }
 
-function export_log() {
+function log_level() {
     const game = compile();
-    console.log(JSON.stringify(game));
+    console.log(game);
+}
+
+function save() {
+    const game = compile();
+    const error = document.getElementById("error");
+    if ("error" in game) {
+        error.classList.remove("hidden");
+        document.getElementById("error_msg").textContent = game["error"];
+    } else {
+        error.classList.add("hidden");
+        document.cookie = `editorlevel=${JSON.stringify(game)};max-age=${60 * 60 * 24 * 365};samesite=strict`;
+    }
+}
+
+function download() {
+    const game = compile();
+    const a = document.createElement("a");
+    a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(game));
+    a.download = "level.json"
+    a.click();
 }
