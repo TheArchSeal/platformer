@@ -1,3 +1,5 @@
+"use strict";
+
 class SpriteTool extends Tool {
     constructor(name, type, data, src, src_w, src_h, x, y, w, h, frame_width, frame_count, frame_offset, spf, repeat_cooldown, tile_w, tile_h) {
         super(name, "sprites", SpriteObj);
@@ -25,10 +27,9 @@ class SpriteTool extends Tool {
         img.alt = this.name;
 
         const scale = size / Math.max(this.w, this.h);
-        img.width = this.src_w * scale;
-        img.height = this.src_h * scale;
-        img.style.marginLeft = `${-(this.x + this.frame_width * this.frame_offset) * scale}px`;
-        img.style.marginTop = `${-this.y * scale}px`;
+        img.style.scale = scale;
+        img.style.translate = `${-(this.x + this.frame_width * this.frame_offset) * scale}px ${-this.y * scale}px`;
+        img.style.transformOrigin = "0 0";
 
         const div = document.createElement("div");
         div.style.width = `${this.w * scale}px`;

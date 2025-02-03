@@ -1,3 +1,5 @@
+"use strict";
+
 class TileTool extends Tool {
     constructor(name, src, src_w, src_h, tile_size, x, y, extendable_x, extendable_y, draggable_x, draggable_y, collide_top, collide_bottom, collide_left, collide_right, deadly, padding) {
         super(name, "tiles", TileObj);
@@ -24,10 +26,9 @@ class TileTool extends Tool {
         img.src = this.src;
         img.alt = this.name;
 
-        img.width = this.src_w * size / (this.tile_size * 3);
-        img.height = this.src_h * size / (this.tile_size * 3);
-        img.style.marginLeft = `${-this.x * size / 3}px`;
-        img.style.marginTop = `${-this.y * size / 3}px`;
+        img.style.scale = size / (this.tile_size * 3);
+        img.style.translate = `${-this.x * size / 3}px ${-this.y * size / 3}px`;
+        img.style.transformOrigin = "0 0";
 
         const div = document.createElement("div");
         div.style.width = `${this.extendable_x ? size : size / 3}px`;

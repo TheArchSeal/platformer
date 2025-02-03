@@ -1,3 +1,5 @@
+"use strict";
+
 class Level {
     static selector_ids = [
         "levels",

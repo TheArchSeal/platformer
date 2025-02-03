@@ -1,3 +1,5 @@
+"use strict";
+
 function tile_recepie(tile, r) {
     return [
         tile.src,

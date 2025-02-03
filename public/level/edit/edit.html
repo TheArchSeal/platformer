@@ -12,6 +12,7 @@
     <script src="tile.js" defer></script>
     <script src="sprite.js" defer></script>
     <script src="player.js" defer></script>
+    <script src="background.js" defer></script>
     <script src="compile.js" defer></script>
     <script src="main.js" defer></script>
 </head>
@@ -31,9 +32,13 @@
         <div class="tiles"></div>
         <h3>Items</h3>
         <div class="sprites"></div>
+        <h4>Background</h4>
+        <div class="background"></div>
     </div>
     <div class="options">
         <h2>Options</h2>
+        <button onclick="clear_level()">Clear</button>
+
         <label for="width">Width</label>
         <input type="number" name="width" id="width" min="1" value="40" onchange="curr_level?.resize()">
         <label for="height">Height</label>

@@ -84,6 +84,7 @@ img {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
+    pointer-events: none;
 }
 
 tr:not(:first-child) .border {
@@ -103,14 +104,23 @@ td:not(:first-child) .border {
 
 .cell div {
     position: absolute;
+    z-index: 1;
+}
+
+.cell .background {
+    z-index: 0;
 }
 
 .ghost {
     opacity: 50%;
 }
 
-:has(.selected)>.border {
+.border {
     z-index: 1;
+}
+
+:has(.selected)>.border {
+    z-index: 3;
 }
 
 :has(.selected.top)>.border {

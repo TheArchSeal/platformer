@@ -1,3 +1,5 @@
+"use strict";
+
 class PlayerTool extends Tool {
     constructor(name, sprites) {
         super(name, "player", PlayerObj);

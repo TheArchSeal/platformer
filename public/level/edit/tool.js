@@ -1,3 +1,5 @@
+"use strict";
+
 class Tool {
     constructor(name, category, obj_t) {
         this.name = name;
@@ -53,9 +55,9 @@ class Obj {
                 };
 
                 if (j === 0) elem.classList.add("top");
-                if (j + 1 === this.h) elem.classList.add("bottom");
+                if (j + 1 >= this.h) elem.classList.add("bottom");
                 if (i === 0) elem.classList.add("left");
-                if (i + 1 === this.w) elem.classList.add("right");
+                if (i + 1 >= this.w) elem.classList.add("right");
 
                 this.elements[j][i] = elem;
             }
