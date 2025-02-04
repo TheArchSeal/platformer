@@ -204,3 +204,4 @@ document.onkeydown = e => {
 }
 
 new_level();
+load();
