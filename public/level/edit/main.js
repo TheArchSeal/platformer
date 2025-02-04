@@ -37,6 +37,8 @@ const tools = new Set([
     new BackgroundTool("lantern", background, 7, 12, 3, 2),
 ]);
 
+const move_tool = {};
+
 tools.forEach(tool => document.querySelector(`.${tool.category}`).appendChild(tool.button(50)));
 
 const levels = new Set();
@@ -94,25 +96,35 @@ function obj_delete() {
 }
 
 function cell_enter(col, row) {
-    if (mouse_down) {
+    if (selected_tool === move_tool) {
+        if (mouse_down) selected_obj?.move(col - move_tool.i, row - move_tool.j);
+        else selected_tool = null;
+    } else if (mouse_down) {
         tool_obj?.drag(col, row);
     } else {
         tool_obj?.ghost(col, row);
     }
 }
 
-function cell_click() {
+function obj_mdown(obj, i, j) {
     if (selected_tool === null) {
-        obj_deselect();
+        obj_select(obj);
+        selected_tool = move_tool;
+        move_tool.i = i;
+        move_tool.j = j;
     }
 }
 
 function cell_mdown(col, row) {
-    tool_obj?.place(col, row);
+    if (selected_tool === null)
+        obj_deselect();
+    else tool_obj?.place(col, row);
 }
 
 function cell_mup() {
-    if (tool_obj) {
+    if (selected_tool === move_tool) {
+        selected_tool = null;
+    } else if (tool_obj) {
         curr_level.objects.add(tool_obj);
         tool_obj = tool_obj.clone();
         tool_obj.create();

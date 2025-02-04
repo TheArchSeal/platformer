@@ -42,7 +42,7 @@ class TileTool extends Tool {
         img.src = this.src;
         img.alt = this.name;
 
-        const sin = (r % 2) * (r - 2);
+        const sin = (r % 2) * (2 - r);
         const cos = (r % 2 - 1) * (r - 1);
         const rotate_x = (x, y) => cos * x - sin * y;
         const rotate_y = (x, y) => sin * x + cos * y;
@@ -62,7 +62,7 @@ class TileTool extends Tool {
         const [marginLeft, marginTop] = rotate(this.x + offset_x, this.y + offset_y);
 
         img.style.transformOrigin = `${50 / width}% ${50 / height}%`;
-        img.style.rotate = `${-90 * r}deg`
+        img.style.rotate = `${90 * r}deg`
         img.style.width = `${100 * width}%`;
         img.style.height = `${100 * height}%`;
         img.style.marginLeft = `${-100 * marginLeft}%`;

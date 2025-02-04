@@ -129,7 +129,7 @@ class Level {
     }
 
     get_cell(col, row) {
-        return this.table.querySelector(`tr:nth-child(${row + 1}) td:nth-child(${col + 1}) .cell`);
+        return this.table.children.item(row)?.children.item(col)?.querySelector('.cell') || null;
     }
 
     get_pos(cell) {
@@ -149,7 +149,6 @@ class Level {
         border.classList.add("border")
 
         cell.onmouseenter = () => cell_enter(...this.get_pos(cell));
-        cell.onclick = () => cell_click(...this.get_pos(cell));
         cell.onmousedown = () => cell_mdown(...this.get_pos(cell));
         cell.onmouseup = () => cell_mup(...this.get_pos(cell));
 

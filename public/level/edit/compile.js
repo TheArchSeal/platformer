@@ -196,12 +196,7 @@ function compile() {
     return game;
 }
 
-function log_level() {
-    const game = compile();
-    console.log(game);
-}
-
-function save() {
+function catch_compile(callbackfn) {
     const game = compile();
     const error = document.getElementById("error");
     if ("error" in game) {
@@ -209,14 +204,23 @@ function save() {
         document.getElementById("error_msg").textContent = game["error"];
     } else {
         error.classList.add("hidden");
-        document.cookie = `editorlevel=${JSON.stringify(game)};max-age=${60 * 60 * 24 * 365};samesite=strict`;
+        callbackfn(game);
     }
 }
 
+function log_level() {
+    console.log(compile());
+}
+
+function save() {
+    catch_compile(game => localStorage.setItem("editorlevel", JSON.stringify(game)));
+}
+
 function download() {
-    const game = compile();
-    const a = document.createElement("a");
-    a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(game));
-    a.download = "level.json"
-    a.click();
+    catch_compile(game => {
+        const a = document.createElement("a");
+        a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(game));
+        a.download = "level.json"
+        a.click();
+    });
 }

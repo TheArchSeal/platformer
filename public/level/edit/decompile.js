@@ -56,7 +56,10 @@ function player_factory(player, sprites) {
 
 function background_base_factory(background_base) {
     if (
-        background.src === background_base[0] &&
+        (
+            background.src === background_base[0] ||
+            "/level/play/" + background.src === background_base[0]
+        ) &&
         background.tile_size === background_base[1] &&
         background.color === background_base[2]
     ) return background;
@@ -80,7 +83,7 @@ function background_factory(background_tile, background_base) {
 
     const b = new BackgroundObj(tool);
     b.x = background_tile[2];
-    b.x = background_tile[3];
+    b.y = background_tile[3];
 
     return b;
 }
@@ -173,9 +176,9 @@ function decompile(game) {
         level.set_options();
         level.create();
         curr_level = level;
-        for (const object of level.objects) {
-            object.create();
-            object.place(object.x, object.y);
+        for (const obj of level.objects) {
+            obj.create();
+            obj.place(obj.x, obj.y);
         }
     }
 
@@ -185,20 +188,13 @@ function decompile(game) {
 }
 
 function load() {
-    const game = JSON.parse(
-        document.cookie.split(";")
-            .find(row => row.trimStart().startsWith("editorlevel="))
-            ?.split("=")[1] || "{}"
-    );
-    decompile(game);
+    const game = localStorage.getItem("editorlevel");
+    if (game) decompile(JSON.parse(game));
 }
 
 function upload() {
     const file = document.getElementById("upload_input").files[0];
     const reader = new FileReader();
-    reader.onload = () => {
-        const game = JSON.parse(reader.result);
-        decompile(game);
-    };
+    reader.onload = () => decompile(JSON.parse(reader.result));
     reader.readAsText(file);
 }

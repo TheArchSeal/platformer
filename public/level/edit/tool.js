@@ -49,10 +49,7 @@ class Obj {
             this.elements[j] = [];
             for (let i = 0; i < this.w; i++) {
                 const elem = this.sub_tile(i, j, this.w, this.h);
-                elem.onclick = e => {
-                    obj_select(this);
-                    e.stopPropagation();
-                };
+                elem.onmousedown = () => obj_mdown(this, i, j);
 
                 if (j === 0) elem.classList.add("top");
                 if (j + 1 >= this.h) elem.classList.add("bottom");
