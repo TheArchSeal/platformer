@@ -39,34 +39,36 @@ class TileTool extends Tool {
 
     sub_tile(x, y, w, h, r) {
         const img = document.createElement("img");
+        img.onload = () => {
+            const sin = (r % 2) * (2 - r);
+            const cos = (r % 2 - 1) * (r - 1);
+            const rotate_x = (x, y) => cos * x - sin * y;
+            const rotate_y = (x, y) => sin * x + cos * y;
+            const rotate = (x, y) => [rotate_x(x, y), rotate_y(x, y)];
+
+            w--;
+            h--;
+            if (rotate_x(1, 1) < 0) x = w - x;
+            if (rotate_y(1, 1) < 0) y = h - y;
+            [x, y] = rotate(x, y);
+            [w, h] = rotate(w, h);
+
+            const offset_x = !this.extendable_x || x === 0 ? 0 : x === w ? 2 : 1;
+            const offset_y = !this.extendable_y || y === 0 ? 0 : y === h ? 2 : 1;
+            const width = img.naturalWidth / this.tile_size
+            const height = img.naturalHeight / this.tile_size
+            const [marginLeft, marginTop] = rotate(this.x + offset_x, this.y + offset_y);
+
+            img.style.transformOrigin = `${50 / width}% ${50 / height}%`;
+            img.style.rotate = `${90 * r}deg`
+            img.style.width = `${100 * width}%`;
+            img.style.height = `${100 * height}%`;
+            img.style.marginLeft = `${-100 * marginLeft}%`;
+            img.style.marginTop = `${-100 * marginTop}%`;
+        }
+
         img.src = this.src;
         img.alt = this.name;
-
-        const sin = (r % 2) * (2 - r);
-        const cos = (r % 2 - 1) * (r - 1);
-        const rotate_x = (x, y) => cos * x - sin * y;
-        const rotate_y = (x, y) => sin * x + cos * y;
-        const rotate = (x, y) => [rotate_x(x, y), rotate_y(x, y)];
-
-        w--;
-        h--;
-        if (rotate_x(1, 1) < 0) x = w - x;
-        if (rotate_y(1, 1) < 0) y = h - y;
-        [x, y] = rotate(x, y);
-        [w, h] = rotate(w, h);
-
-        const offset_x = !this.extendable_x || x === 0 ? 0 : x === w ? 2 : 1;
-        const offset_y = !this.extendable_y || y === 0 ? 0 : y === h ? 2 : 1;
-        const width = img.naturalWidth / this.tile_size
-        const height = img.naturalHeight / this.tile_size
-        const [marginLeft, marginTop] = rotate(this.x + offset_x, this.y + offset_y);
-
-        img.style.transformOrigin = `${50 / width}% ${50 / height}%`;
-        img.style.rotate = `${90 * r}deg`
-        img.style.width = `${100 * width}%`;
-        img.style.height = `${100 * height}%`;
-        img.style.marginLeft = `${-100 * marginLeft}%`;
-        img.style.marginTop = `${-100 * marginTop}%`;
 
         const div = document.createElement("div");
         div.style.width = "100%";

@@ -40,18 +40,20 @@ class SpriteTool extends Tool {
 
     sub_tile(x, y, w, h) {
         const img = document.createElement("img");
+        img.onload = () => {
+            const width = img.naturalWidth * w / this.w;
+            const height = img.naturalHeight * h / this.h;
+            const marginLeft = (this.x + this.frame_width * this.frame_offset) / this.w + x;
+            const marginTop = this.y / this.h + y;
+
+            img.style.width = `${100 * width}%`;
+            img.style.height = `${100 * height}%`;
+            img.style.marginLeft = `${-100 * marginLeft}%`;
+            img.style.marginTop = `${-100 * marginTop}%`;
+        };
+
         img.src = this.src;
         img.alt = this.name;
-
-        const width = img.naturalWidth * w / this.w;
-        const height = img.naturalHeight * h / this.h;
-        const marginLeft = (this.x + this.frame_width * this.frame_offset) / this.w + x;
-        const marginTop = this.y / this.h + y;
-
-        img.style.width = `${100 * width}%`;
-        img.style.height = `${100 * height}%`;
-        img.style.marginLeft = `${-100 * marginLeft}%`;
-        img.style.marginTop = `${-100 * marginTop}%`;
 
         const div = document.createElement("div");
         div.style.width = "100%";

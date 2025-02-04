@@ -7,11 +7,19 @@
 	<title>{{level.name}}</title>
 	<link rel="stylesheet" href="style.css">
 
+	{{#if data}}
 	<script defer>
 		const template = (
 			{{{ data }}}
 		).data;
 	</script>
+	{{else if local}}
+	<script defer>
+		const template = JSON.parse(localStorage.getItem(
+			"{{local}}"
+		)).data;
+	</script>
+	{{/if}}
 
 	<script src="template.js" defer></script>
 	<script src="hitbox.js" defer></script>
@@ -47,7 +55,11 @@
 			<p class="best deaths">Deaths: <span></span></p>
 
 			<button type="button" class="reset button" onclick="game.start()">Restart</button>
+			{{#if level.id}}
 			<button type="button" class="back button" onclick="location.href='/level?id={{level.id}}'">Back</button>
+			{{else}}
+			<button type="button" class="back button" onclick="location.href='/level/edit'">Back</button>
+			{{/if}}
 		</div>
 	</div>
 </body>

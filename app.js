@@ -127,18 +127,22 @@ app.get("/level", verify_login((req, res, user) => {
 }));
 
 app.get("/level/play", (req, res) => {
-	const { id } = req.query;
+	const { id, local } = req.query;
 
-	// select basic stats
-	db.query("SELECT id, name, filename FROM levels WHERE id = :levelId", { levelId: id }, handle_value(
-		level => {
-			// get game data from file
-			const json = fs.readFileSync(upload_path + level.filename);
-			res.render("game", { level: level, data: json });
-		},
-		() => res.render("404", { page: "level" }), // level not in database
-		internal_error(res)
-	))
+	if (local) {
+		res.render("game", { level: { name: "Test" }, local: local });
+	} else {
+		// select basic stats
+		db.query("SELECT id, name, filename FROM levels WHERE id = :levelId", { levelId: id }, handle_value(
+			level => {
+				// get game data from file
+				const json = fs.readFileSync(upload_path + level.filename);
+				res.render("game", { level: level, data: json });
+			},
+			() => res.render("404", { page: "level" }), // level not in database
+			internal_error(res)
+		));
+	}
 });
 
 // respond with levels displayed on homepage

@@ -224,3 +224,9 @@ function download() {
         a.click();
     });
 }
+
+function test() {
+    save();
+    if (document.getElementById("error").classList.contains("hidden"))
+        location.href = '/level/play?local=editorlevel';
+}

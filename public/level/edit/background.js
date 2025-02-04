@@ -39,18 +39,20 @@ class BackgroundTool extends Tool {
 
     sub_tile(x, y, w, h) {
         const img = document.createElement("img");
+        img.onload = () => {
+            const width = img.naturalWidth * w / (this.base.tile_size * this.w);
+            const height = img.naturalHeight * h / (this.base.tile_size * this.h);
+            const marginLeft = this.x + x;
+            const marginTop = this.y + y;
+
+            img.style.width = `${100 * width}%`;
+            img.style.height = `${100 * height}%`;
+            img.style.marginLeft = `${-100 * marginLeft}%`;
+            img.style.marginTop = `${-100 * marginTop}%`;
+        }
+
         img.src = this.base.src;
         img.alt = this.name;
-
-        const width = img.naturalWidth * w / (this.base.tile_size * this.w);
-        const height = img.naturalHeight * h / (this.base.tile_size * this.h);
-        const marginLeft = this.x + x;
-        const marginTop = this.y + y;
-
-        img.style.width = `${100 * width}%`;
-        img.style.height = `${100 * height}%`;
-        img.style.marginLeft = `${-100 * marginLeft}%`;
-        img.style.marginTop = `${-100 * marginTop}%`;
 
         const div = document.createElement("div");
         div.style.width = "100%";
