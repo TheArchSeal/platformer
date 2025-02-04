@@ -22,9 +22,12 @@
 			<a href="/signup">Signup</a>
 			{{/if}}
 		</span>
-		{{#if user}}
-		<nav><a href="/upload">Upload</a></nav>
-		{{/if}}
+		<nav>
+			<a href="/level/edit">Edit</a>
+			{{#if user}}
+			<a href="/upload">Upload</a>
+			{{/if}}
+		</nav>
 		<div class="search-area">
 			<form class="search-form" action="#" method="get">
 				<table class="search-table">
