@@ -459,12 +459,14 @@ app.post("/delete/level", verify_login((req, res, user) => {
 	const { id } = req.query;
 
 	if (!user) res.sendStatus(401); // not logged in
-	else db.query("SELECT creatorId FROM levels WHERE id = :levelId", { levelId: id }, handle_value(
+	else db.query("SELECT creatorId, filename FROM levels WHERE id = :levelId", { levelId: id }, handle_value(
 		val => {
 			if (!user.admin && user.id !== val.creatorId) res.sendStatus(403); // not allowed to delete this level
 			else db.query("DELETE FROM levels WHERE id = :levelId", { levelId: id }, err => {
-				if (!err) res.sendStatus(200);
-				else internal_error(res)(err);
+				if (!err) {
+					fs.unlinkSync(upload_path + val.filename);
+					res.sendStatus(200);
+				} else internal_error(res)(err);
 			});
 		},
 		() => res.sendStatus(404), // level not in database
