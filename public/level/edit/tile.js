@@ -39,7 +39,7 @@ class TileTool extends Tool {
 
     sub_tile(x, y, w, h, r) {
         const img = document.createElement("img");
-        img.onload = () => {
+        const set_size = () => {
             const sin = (r % 2) * (2 - r);
             const cos = (r % 2 - 1) * (r - 1);
             const rotate_x = (x, y) => cos * x - sin * y;
@@ -69,6 +69,9 @@ class TileTool extends Tool {
 
         img.src = this.src;
         img.alt = this.name;
+
+        if (img.complete) set_size();
+        else img.onload = set_size;
 
         const div = document.createElement("div");
         div.style.width = "100%";

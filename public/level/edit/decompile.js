@@ -1,13 +1,17 @@
 "use strict";
 
+function val_or_default(val, def) {
+    return val === undefined ? def : val;
+}
+
 function tile_factory(tile, game_tools, rotation_data) {
     const tool = game_tools[tile[0]];
-    tool.collide_top = tile[5] || true;
-    tool.collide_bottom = tile[6] || true;
-    tool.collide_left = tile[7] || true;
-    tool.collide_right = tile[8] || true;
-    tool.collide_deadly = tile[9] || false;
-    tool.collide_padding = tile[10] || 0;
+    tool.collide_top = val_or_default(tile[5], true);
+    tool.collide_bottom = val_or_default(tile[6], true);
+    tool.collide_left = val_or_default(tile[7], true);
+    tool.collide_right = val_or_default(tile[8], true);
+    tool.deadly = val_or_default(tile[9], false);
+    tool.padding = val_or_default(tile[10], 0);
 
     const t = new TileObj(tool)
     t.x = tile[1];
@@ -141,7 +145,7 @@ function decompile(game) {
             null,
             null
         );
-        rotation_data[name] = tile[6] || 0;
+        rotation_data[name] = val_or_default(tile[6], 0);
     });
 
     Object.entries(game["data"][1]).forEach(([name, sprite]) => {
