@@ -93,10 +93,10 @@ function level_factory(level, name, game_tools, rotation_data) {
     l.w = level[0];
     l.h = level[1];
     l.dash_count = level[2][2];
-    l.level_top = level[7] || "";
-    l.level_bottom = level[8] || "";
-    l.level_left = level[9] || "";
-    l.level_right = level[10] || "";
+    l.level_top = level[7];
+    l.level_bottom = level[8];
+    l.level_left = level[9];
+    l.level_right = level[10];
 
     const player_sprites = Object.entries(game_tools)
         .filter(([name, _]) => name.startsWith("player"))
@@ -120,7 +120,7 @@ function level_factory(level, name, game_tools, rotation_data) {
 function decompile(game) {
     const rotation_data = {};
     const game_tools = {};
-    const game_levels = new Set();
+    const game_levels = {};
 
     Object.entries(game["data"][0]).forEach(([name, tile]) => {
         game_tools[name] = new TileTool(
@@ -166,12 +166,17 @@ function decompile(game) {
     })
 
     Object.entries(game["data"][2]).forEach(([name, level]) =>
-        game_levels.add(level_factory(level, name, game_tools, rotation_data))
+        game_levels[name] = level_factory(level, name, game_tools, rotation_data)
     );
 
     for (const level of levels) level.destroy();
     levels.clear();
-    for (const level of game_levels) {
+    Object.values(game_levels).forEach(level => {
+        if (level.level_top) level.level_top = game_levels[level.level_top];
+        if (level.level_bottom) level.level_bottom = game_levels[level.level_bottom];
+        if (level.level_left) level.level_left = game_levels[level.level_left];
+        if (level.level_right) level.level_right = game_levels[level.level_right];
+
         levels.add(level);
         level.set_options();
         level.create();
@@ -180,7 +185,7 @@ function decompile(game) {
             obj.create();
             obj.place(obj.x, obj.y);
         }
-    }
+    });
 
     const start_level = game["data"][3];
     document.getElementById("start_level").value = start_level;

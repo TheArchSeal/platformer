@@ -172,14 +172,19 @@ function delete_level() {
     }
 }
 
+function get_level(name) {
+    for (const level of levels)
+        if (level.name === name)
+            return level;
+    return null;
+}
+
 function select_level(name) {
-    for (const level of levels) {
-        if (level.name === name) {
-            obj_deselect();
-            curr_level = level;
-            curr_level.load();
-            break;
-        }
+    const level = get_level(name);
+    if (level) {
+        obj_deselect();
+        curr_level = level;
+        curr_level.load();
     }
 }
 

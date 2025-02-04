@@ -97,10 +97,10 @@ function level_recepie(level, player, objects, items, goals, background) {
         items,
         goals,
         background,
-        level.level_top || null,
-        level.level_bottom || null,
-        level.level_left || null,
-        level.level_right || null
+        level.level_top?.name,
+        level.level_bottom?.name,
+        level.level_left?.name,
+        level.level_right?.name
     ];
 }
 

@@ -50,10 +50,10 @@ class Level {
         this.w = null;
         this.h = null;
         this.dash_count = null;
-        this.level_top = "";
-        this.level_bottom = "";
-        this.level_left = "";
-        this.level_right = "";
+        this.level_top = null;
+        this.level_bottom = null;
+        this.level_left = null;
+        this.level_right = null;
 
         this.objects.forEach(obj => obj.destroy());
         this.objects = new Set();
@@ -77,10 +77,10 @@ class Level {
     }
 
     update_transitions() {
-        this.level_top = document.getElementById("level_top").value;
-        this.level_bottom = document.getElementById("level_bottom").value;
-        this.level_left = document.getElementById("level_left").value;
-        this.level_right = document.getElementById("level_right").value;
+        this.level_top = get_level(document.getElementById("level_top").value);
+        this.level_bottom = get_level(document.getElementById("level_bottom").value);
+        this.level_left = get_level(document.getElementById("level_left").value);
+        this.level_right = get_level(document.getElementById("level_right").value);
     }
 
     set_options() {
@@ -88,10 +88,10 @@ class Level {
         document.getElementById("width").value = this.w.toString();
         document.getElementById("height").value = this.h.toString();
         document.getElementById("dash_count").value = this.dash_count.toString();
-        document.getElementById("level_top").value = this.level_top;
-        document.getElementById("level_bottom").value = this.level_bottom;
-        document.getElementById("level_left").value = this.level_left;
-        document.getElementById("level_right").value = this.level_right;
+        document.getElementById("level_top").value = this.level_top?.name || "";
+        document.getElementById("level_bottom").value = this.level_bottom?.name || "";
+        document.getElementById("level_left").value = this.level_left?.name || "";
+        document.getElementById("level_right").value = this.level_right?.name || "";
     }
 
     resize() {

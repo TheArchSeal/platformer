@@ -54,6 +54,7 @@ const upload = multer({ dest: upload_path });
 app.get("/upload", verify_login((req, res, user) => res.render("upload", { ...pop_message(req, res), user: user })));
 app.get("/login", (req, res) => res.render("login", pop_message(req, res)));
 app.get("/signup", (req, res) => res.render("signup", pop_message(req, res)));
+app.get("/level/edit", (req, res) => res.render("edit"));
 
 // render homepage
 app.get("/", verify_login((req, res, user) => {
