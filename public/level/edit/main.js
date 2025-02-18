@@ -37,8 +37,9 @@ const tools = new Set([
     new BackgroundTool("lantern", background, 7, 12, 3, 2),
 ]);
 
-const move_tool = {};
+const move_tool = {}; // unique object
 
+// append to toolbar
 tools.forEach(tool => document.querySelector(`.${tool.category}`).appendChild(tool.button(50)));
 
 const levels = new Set();
@@ -46,7 +47,7 @@ let curr_level = null;
 
 let mouse_down = false;
 let selected_tool = null;
-let tool_obj = null;
+let tool_obj = null; // not yet placed down obj associated with selected_tool
 let selected_obj = null;
 
 function clear_level() {
@@ -72,7 +73,7 @@ function tool_select(tool) {
 }
 
 function obj_select(obj) {
-    if (selected_tool === null) {
+    if (selected_tool === null) { // selection tool
         selected_obj?.deselect();
         tool_obj?.destroy();
         tool_obj = null;
@@ -96,35 +97,36 @@ function obj_delete() {
 }
 
 function cell_enter(col, row) {
-    if (selected_tool === move_tool) {
+    if (selected_tool === move_tool) { // drag object with move tool
         if (mouse_down) selected_obj?.move(col - move_tool.i, row - move_tool.j);
-        else selected_tool = null;
-    } else if (mouse_down) {
+        else selected_tool = null; // stop moving in case mouse up happened outside the table
+    } else if (mouse_down) { // drag while placing
         tool_obj?.drag(col, row);
-    } else {
+    } else { // preview
         tool_obj?.ghost(col, row);
     }
 }
 
 function obj_mdown(obj, i, j) {
-    if (selected_tool === null) {
+    if (selected_tool === null) { // select object
         obj_select(obj);
         selected_tool = move_tool;
+        // coordinates to offset with while moving
         move_tool.i = i;
         move_tool.j = j;
     }
 }
 
 function cell_mdown(col, row) {
-    if (selected_tool === null)
+    if (selected_tool === null) // select nothing
         obj_deselect();
-    else tool_obj?.place(col, row);
+    else tool_obj?.place(col, row); // place object
 }
 
 function cell_mup() {
-    if (selected_tool === move_tool) {
+    if (selected_tool === move_tool) { // stop moving
         selected_tool = null;
-    } else if (tool_obj) {
+    } else if (tool_obj) { // add newly created object and make a new tool obj
         curr_level.objects.add(tool_obj);
         tool_obj = tool_obj.clone();
         tool_obj.create();
@@ -140,10 +142,10 @@ function tool_rotate(col, row) {
 }
 
 function new_level() {
-    let name = levels.size + 1;
+    let name = levels.size + 1; // default name
     for (const level of levels) {
-        if (parseInt(level.name) >= name)
-            name = parseInt(level.name) + 1;
+        if (parseInt(level.name) >= name) // name already taken
+            name = parseInt(level.name) + 1; // try next name
     }
 
     obj_deselect();
@@ -157,13 +159,14 @@ function delete_level() {
     let prev = null;
     let passed = false;
 
+    // select previous level if possible, otherwise select next level
     for (const level of levels) {
         if (level === curr_level) passed = true;
         if (passed && prev) break;
         if (level !== curr_level) prev = level;
     }
 
-    if (prev) {
+    if (prev) { // don't delete if there are no other levels
         obj_deselect();
         curr_level.destroy();
         levels.delete(curr_level);
@@ -204,4 +207,4 @@ document.onkeydown = e => {
 }
 
 new_level();
-load();
+load(); // try to load saved level on enter

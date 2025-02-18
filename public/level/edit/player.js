@@ -3,8 +3,8 @@
 class PlayerTool extends Tool {
     constructor(name, sprites) {
         super(name, "player", PlayerObj);
-        this.sprites = sprites;
-        this.sprite = sprites[0];
+        this.sprites = sprites; // array of SpriteTool for different animations
+        this.sprite = sprites[0]; // display first sprite
     }
 
     icon(size) { return this.sprite.icon(size); }

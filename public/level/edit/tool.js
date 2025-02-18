@@ -1,14 +1,15 @@
 "use strict";
 
+// base class for tools
 class Tool {
     constructor(name, category, obj_t) {
-        this.name = name;
-        this.category = category;
-        this.obj_t = obj_t;
+        this.name = name; // unique name used as json key
+        this.category = category; // where to put it in toolbar
+        this.obj_t = obj_t; // class of the objects it creates
     }
 
     button(size) {
-        const icon = this.icon(size);
+        const icon = this.icon(size); // implemented by subclass
 
         const input = document.createElement("input");
         input.type = "radio";
@@ -29,14 +30,15 @@ class Tool {
     }
 }
 
+// base class for objects
 class Obj {
     constructor(tool, w, h) {
-        this.tool = tool;
-        this.x = null;
-        this.y = null;
-        this.w = w;
-        this.h = h;
-        this.elements = [];
+        this.tool = tool; // the tool that created it
+        this.x = null; // x position on the level grid
+        this.y = null; // y position on the level grid
+        this.w = w; // width on the level grid
+        this.h = h; // height on the level grid
+        this.elements = []; // 2d array of a html element per tile within object
     }
 
     forEach(callbackfn) {
@@ -48,9 +50,10 @@ class Obj {
         for (let j = 0; j < this.h; j++) {
             this.elements[j] = [];
             for (let i = 0; i < this.w; i++) {
-                const elem = this.sub_tile(i, j, this.w, this.h);
+                const elem = this.sub_tile(i, j, this.w, this.h); // implemented by subclass
                 elem.onmousedown = () => obj_mdown(this, i, j);
 
+                // styling around edges
                 if (j === 0) elem.classList.add("top");
                 if (j + 1 >= this.h) elem.classList.add("bottom");
                 if (i === 0) elem.classList.add("left");
@@ -90,8 +93,8 @@ class Obj {
         this.y = y;
         this.forEach((elem, i, j) => {
             const cell = curr_level.get_cell(x + i, y + j);
-            if (cell === null) elem.remove();
-            else cell.appendChild(elem);
+            if (cell === null) elem.remove(); // would be outside grid
+            else cell.appendChild(elem); // moves to new parent
         });
     }
 

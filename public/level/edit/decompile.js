@@ -66,7 +66,7 @@ function background_base_factory(background_base) {
         ) &&
         background.tile_size === background_base[1] &&
         background.color === background_base[2]
-    ) return background;
+    ) return background; // use default if they match so adding new items will work
 
     return new BackgroundBase(
         background_base[0],
@@ -102,19 +102,24 @@ function level_factory(level, name, game_tools, rotation_data) {
     l.level_left = level[9];
     l.level_right = level[10];
 
+    // player sprites are those that start with player
     const player_sprites = Object.entries(game_tools)
         .filter(([name, _]) => name.startsWith("player"))
         .map(([_, tool]) => tool);
+    // set player size
     player_sprites.forEach(tool => {
         tool.tile_w = 1.4;
         tool.tile_h = 2.5;
     });
+    // add all player sprites
     l.objects.add(player_factory(level[2], player_sprites));
 
+    // add all tiles, items and goals
     level[3].forEach(obj => l.objects.add(tile_factory(obj, game_tools, rotation_data)));
     level[4].forEach(item => l.objects.add(item_factory(item, game_tools)));
     level[5].forEach(goal => l.objects.add(goal_factory(goal, game_tools)));
 
+    // add background objects
     const background_base = background_base_factory(level[6]);
     level[6][3].forEach(background_tile => l.objects.add(background_factory(background_tile, background_base)));
 
@@ -126,6 +131,7 @@ function decompile(game) {
     const game_tools = {};
     const game_levels = {};
 
+    // parse all tile tools
     Object.entries(game["data"][0]).forEach(([name, tile]) => {
         game_tools[name] = new TileTool(
             name,
@@ -148,6 +154,7 @@ function decompile(game) {
         rotation_data[name] = val_or_default(tile[6], 0);
     });
 
+    // parse all sprite tools
     Object.entries(game["data"][1]).forEach(([name, sprite]) => {
         game_tools[name] = new SpriteTool(
             name,
@@ -169,13 +176,16 @@ function decompile(game) {
         );
     })
 
+    // parse all levels
     Object.entries(game["data"][2]).forEach(([name, level]) =>
         game_levels[name] = level_factory(level, name, game_tools, rotation_data)
     );
 
+    // clear previous game
     for (const level of levels) level.destroy();
     levels.clear();
     Object.values(game_levels).forEach(level => {
+        // set transitions
         if (level.level_top) level.level_top = game_levels[level.level_top];
         if (level.level_bottom) level.level_bottom = game_levels[level.level_bottom];
         if (level.level_left) level.level_left = game_levels[level.level_left];
@@ -184,6 +194,7 @@ function decompile(game) {
         levels.add(level);
         level.set_options();
         level.create();
+        // create all objects
         curr_level = level;
         for (const obj of level.objects) {
             obj.create();
@@ -191,17 +202,20 @@ function decompile(game) {
         }
     });
 
+    // select starting level
     const start_level = game["data"][3];
     document.getElementById("start_level").value = start_level;
     select_level(start_level);
 }
 
 function load() {
+    // load from local storage if it exists
     const game = localStorage.getItem("editorlevel");
     if (game) decompile(JSON.parse(game));
 }
 
 function upload() {
+    // load from file
     const file = document.getElementById("upload_input").files[0];
     const reader = new FileReader();
     reader.onload = () => decompile(JSON.parse(reader.result));

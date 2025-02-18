@@ -121,15 +121,16 @@ function compile() {
             switch (obj.tool.category) {
                 case "tiles": {
                     const suffix = ` (${obj.r})`;
+                    // create different tile for each rotation
                     const toolname = obj.tool.name.endsWith(suffix) ? obj.tool.name : obj.tool.name + suffix;
-                    if (!(toolname in game_tiles))
+                    if (!(toolname in game_tiles)) // no duplicate tiles
                         game_tiles[toolname] = tile_recepie(obj.tool, obj.r);
                     level_objects.push(object_recepie(obj, toolname))
                 } break;
 
                 case "sprites": {
                     const toolname = obj.tool.name;
-                    if (!(toolname in game_sprites))
+                    if (!(toolname in game_sprites)) // no duplicate sprites
                         game_sprites[toolname] = sprite_recepie(obj.tool);
 
                     switch (obj.tool.type) {
@@ -152,9 +153,10 @@ function compile() {
                 } break;
 
                 case "player": {
+                    // add all player sprites
                     obj.tool.sprites.forEach(sprite => {
                         const toolname = sprite.name;
-                        if (!(toolname in game_sprites))
+                        if (!(toolname in game_sprites)) // no duplicate sprites
                             game_sprites[toolname] = sprite_recepie(sprite);
                     });
                     if (level_player === null)
@@ -165,7 +167,7 @@ function compile() {
         }
 
         if (background_base === null)
-            background_base = background;
+            background_base = background; // default background
         if (level_player === null)
             return { "error": "No player in screen." };
 
@@ -200,9 +202,10 @@ function catch_compile(callbackfn) {
     const game = compile();
     const error = document.getElementById("error");
     if ("error" in game) {
+        // display error
         error.classList.remove("hidden");
         document.getElementById("error_msg").textContent = game["error"];
-    } else {
+    } else { // success
         error.classList.add("hidden");
         callbackfn(game);
     }
@@ -213,10 +216,12 @@ function log_level() {
 }
 
 function save() {
+    // save to local storage
     catch_compile(game => localStorage.setItem("editorlevel", JSON.stringify(game)));
 }
 
 function download() {
+    // download file
     catch_compile(game => {
         const a = document.createElement("a");
         a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(game));
@@ -227,6 +232,7 @@ function download() {
 
 function test() {
     save();
+    // play local level if succeeded
     if (document.getElementById("error").classList.contains("hidden"))
         location.href = '/level/play?local=editorlevel';
 }
